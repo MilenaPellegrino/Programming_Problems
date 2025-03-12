@@ -25,39 +25,64 @@ typedef vector<char> vc;
 
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
-ll MAXN = 1000000000 + 1;
-vi factorials(MAXN);
-
-ll fact(int n) {
-    if (n == 0 || n == 1) return 1;
-    if (factorials[n] != 0) return factorials[n];  // Si ya está calculado, devuelvo el resultado
-
-    factorials[n] = n * fact(n - 1);  // Memorizo el resultado
-    return factorials[n];
+ll fact(ll n){
+    ll res = 1;
+    fore(i, 1, n+1){
+        res *= i;
+    }
+    return res;
 }
-
 
 void solve(){
     ll n; cin>>n;
     ll d; cin>>d;
     vi res; 
+
+    if(n>7){
+        n=7;
+    }
+    ll facts = fact(n);
+    vi odds = {1, 3, 5, 7, 9};
+
+    for(ll divs : odds){
+        if(divs==1){
+            res.pb(1);}
+        if (divs == 3 || divs == 9) {
+                // Para divisor 3 o 9, la suma de los dígitos es d * n!
+                long long sum = d * n_fact;
+                if (sum % divs == 0) {
+                    cout << divisor << " ";
+                }
+        } else if (divs == 5) {
+                // Para divisor 5, el número debe terminar en 0 o 5
+            if (d == 5) {
+                    cout << "5 ";
+                }
+        } else if (divisor == 7) {
+                // Para divisor 7, usamos la propiedad de que si n >= 3, el número es divisible por 7
+            if (n >= 3 || d == 7) {
+                    cout << "7 ";
+                }
+            }
+        }
+    }
     res.pb(1);  //  All numbers are divisible by 1
 
-    ll num = fact(n) * d; 
-    
-    if(num%3 == 0){  // Div by 3
+    vi odds = {1, 3, 5, 7, 9};
+
+    if(d%3 == 0 || n>=3){  // Div by 3
         res.pb(3);
     }
 
-    if(d == 5 || d == 0){  // Div by 5
+    if(d == 5){  // Div by 5
         res.pb(5);
     }
 
-    if(num%7 == 0){  // Div by 7
+    if(d == 7 || n >= 3){  // Div by 7
         res.pb(7);
     }
 
-    if(num%9 == 0){  // Div by 9
+    if(d%9 == 0 || n>=6){  // Div by 9
         res.pb(9);
     }
     fore(i, 0, sz(res)){
