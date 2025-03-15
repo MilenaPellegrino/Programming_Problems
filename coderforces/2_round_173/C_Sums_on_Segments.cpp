@@ -54,6 +54,42 @@ ll min_subarray_sum(vi &arr){
     return min_sum;
 }
 
+ll max_subarray_sum_with_x(vi &arr, ll x){
+    ll maxSum = NUM_MIN;
+    ll currentSum = 0;
+    bool hasX = false;
+    for (ll num : arr){
+        currentSum += num;
+        if (num == x) hasX = true;
+        if(hasX){
+            maxSum = max(maxSum, currentSum);
+        }
+        if(currentSum < 0 && !hasX){
+            currentSum = 0;
+        }
+    }
+    return maxSum;
+}
+
+
+ll min_subarray_sum_with_x(vi &arr, ll x){
+    ll minSum = NUM_MAX;
+    ll currentSum = 0;
+    bool hasX = false;
+    for (ll num : arr){
+        currentSum += num;
+        if (num == x) hasX = true;
+        if(hasX){
+            minSum = min(minSum, currentSum);
+        }
+        if(currentSum > 0 && !hasX){
+            currentSum = 0;
+        }
+    }
+    return minSum;
+}
+
+
 void solve(){
     ll n; cin>>n;
     vi a(n); 
@@ -62,33 +98,44 @@ void solve(){
     ll x;
     res.insert(0);
     //vi res; 
-    vi sin_x; 
+    vi sin_x1; 
+    vi sin_x2;
+    bool sinx = true;
     fore(i, 0, n){
         if(a[i] != 1  && a[i] != -1){
             x = a[i];
-        }else{
-            sin_x.pb(a[i]);
+            sinx = false;
+        }else if(sinx){
+            sin_x1.pb(a[i]);
+        } else if (!sinx){
+            sin_x2.pb(a[i]);
         }
     }
-    ll min_sx = min_subarray_sum(sin_x);
-    ll max_sx = max_subarray_sum(sin_x);
+    ll min_sx1 = min_subarray_sum(sin_x1);
+    ll max_sx1 = max_subarray_sum(sin_x1);
 
-    //db(min_sx);
-    //db(max_sx);
+    ll min_sx2 = min_subarray_sum(sin_x2);
+    ll max_sx2 = max_subarray_sum(sin_x2);
 
-    fore(i, min_sx, max_sx + 1){
+    // db(min_sx1);
+    // db(max_sx1);
+
+    // db(min_sx2);
+    // db(max_sx2);
+
+    fore(i, min_sx1, max_sx1 + 1){
+        res.insert(i);
+    }
+    fore(i, min_sx2, max_sx2 + 1){
         res.insert(i);
     }
 
-    ll min_cx = min_subarray_sum(a);
-    ll max_cx = max_subarray_sum(a);
+    ll min_cx = min_subarray_sum_with_x(a, x);
+    ll max_cx = max_subarray_sum_with_x(a, x);
 
-    //db(min_cx);
-    //db(max_cx);
+    // db(min_cx);
+    // db(max_cx);
 
-    if (min_cx < x){
-        min_cx = min(x, min_cx+x);
-    }
     fore(i, min_cx, max_cx + 1){
         res.insert(i);
     }
