@@ -94,13 +94,17 @@ void solve(){
     ll n; cin>>n;
     vi a(n); 
     fore(i, 0, n)cin>>a[i];
+
+
     set<ll> res;
     ll x;
     res.insert(0);
     //vi res; 
     vi sin_x1; 
     vi sin_x2;
+    vi alls;
     bool sinx = true;
+    
     fore(i, 0, n){
         if(a[i] != 1  && a[i] != -1){
             x = a[i];
@@ -110,6 +114,24 @@ void solve(){
         } else if (!sinx){
             sin_x2.pb(a[i]);
         }
+        alls.pb(a[i]);
+    }
+
+    // Caso especial no hay elemento x 
+    if(sinx){
+        ll min_alls = min_subarray_sum(alls);
+        ll max_alls = max_subarray_sum(alls);
+        fore(i, min_alls, max_alls + 1){
+            res.insert(i);
+        }
+        vi res_v (all(res));
+        sort(all(res_v));
+        cout<<sz(res_v)<<"\n";
+        fore(i, 0, sz(res_v)){
+            cout<<res_v[i]<<" ";
+        }
+        cout<<"\n";
+        return;
     }
     ll min_sx1 = min_subarray_sum(sin_x1);
     ll max_sx1 = max_subarray_sum(sin_x1);
