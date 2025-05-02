@@ -25,60 +25,51 @@ typedef vector<char> vc;
 
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
-
-vector<vector<int>> ady;
-vector<bool> visited;
-
-void dfs(int u) {
-    visited[u] = true;
-    for (int v : ady[u]) {
-        if (!visited[v]) {
-            dfs(v);
-        }
-    }
-}
-
-void countOperations(int n, int m) {
-    // Contar componentes conexos
-    visited.assign(n, false);
-    int components = 0;
-    
-    for (int i = 0; i < n; ++i) {
-        if (!visited[i]) {
-            components++;
-            dfs(i);
-        }
-    }
-    
-    // Conexiones a agregar: componentes - 1
-    int add = components - 1;
-    
-    // Conexiones a eliminar: m - (n - 1) + add
-    // Un árbol tiene n-1 aristas, y ya agregamos 'add' conexiones
-    int remove = m - (n - 1 - add);
-    
-    // No puede ser negativo
-    remove = max(remove, 0);
-    
-    cout << "Conexiones a agregar: " << add << endl;
-    cout << "Conexiones a eliminar: " << remove << endl;
-}
+const double PI = 3.14159265359;
 
 void solve() {
-    ll n, m; cin>>n>>m;
-    
-    ady.clear();
-    ady.resize(n);
-    
-    fore(i, 0, m){
-        int a, b;
-        cin >> a >> b;
-        a--; b--;
-        ady[a].push_back(b);
-        ady[b].push_back(a);
+    ll r[4];
+    cin>>r[1]>>r[2]>>r[3]; 
+    r[0] = -1;
+    ll n, q; cin>>n>>q; 
+    while(q--){
+        ll c1, l1, c2, l2; cin>>c1>>l1>>c2>>l2; 
+
+        // Caso especial 
+        if(c1 == c2 && l1 == l2){
+            cout<<fixed<<setprecision(10)<<0.0<<"\n"; 
+            continue;
+        }
+
+        double dif_lineas = min(abs(l1 - l2), n-abs(l1 - l2)); // Circular 
+        double angl = dif_lineas * (2.0 * PI / n);
+
+
+        if (c1 == c2){
+            // caso donde tamo en el mismo circulo, pero hay que movermos por su circun
+            cout << fixed<<setprecision(10)<<angl * r[c1] << "\n";
+        } else {
+
+            // Caso 1: simplemente la linea recta 
+            if(l1 == l2){
+                double res = abs(r[c1] - r[c2]);
+                cout<<fixed<< setprecision(10) << res <<"\n";
+                continue;
+            }
+
+            // Caso 2: UN mix de frutas
+
+            double cas1 = angl * r[c1] + abs(r[c2] - r[c1]); 
+            double cas2 = angl * r[c2] + abs(r[c2] - r[c1]);
+
+            double mins = min(cas1, cas2);
+
+            cout<<fixed<<setprecision(10)<<mins<<"\n";
+        }
+        //ll dist_derec = r[c2] - r[c1];
+        //db(dist_derec);
+        //cout<<fixed<<setprecision(10)<<dist_circ<<"\n";
     }
-    
-    countOperations(n, m);
 }
 
 int main(){
