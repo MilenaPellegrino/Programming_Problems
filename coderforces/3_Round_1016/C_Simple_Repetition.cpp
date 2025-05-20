@@ -25,41 +25,43 @@ typedef vector<char> vc;
 
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
-void solve(){
-    string n; cin>>n; 
-    ll cant0 = 0;
-    fore(i, 0, sz(n)){
-        if(n[i] == '0')cant0++;
-    }
-    //Caso especial no hay 0's 
-    if(cant0 == 0){
-        cout<<sz(n) - 1<<"\n";
-        return;
-    }
-    // Caso especial 1 cifra
-    if(sz(n) == 1){
-        cout<<0<<"\n";
-        return;
-    }
 
-    // Caso general
-    reverse(all(n)); 
-    ll cont = 0;
-    ll lim = 0;
-    fore(i, 0, sz(n)){
-        if(n[i] != '0'){
-            lim = sz(n) - i;
-            break;
-        }
-        cont++;
+bool esPrimo(ll n) {
+    if (n <= 1) return false;
+    if (n == 2 || n == 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    for (ll i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) return false;
     }
-    reverse(all(n));
-    fore(i, 0, lim-1){
-        if(n[i]!='0'){
-            cont++;
-        }
+    return true;
+}
+
+
+void solve(){
+    ll x, k; cin>>x>>k;
+
+    // if (x==1 && k ==2){
+    //     cout<<"YES"<<"\n";
+    //     return;
+    // }
+    // if (x%2 == 0){
+    //     cout<<"NO"<<"\n";
+    //     return;
+    // }else if (x % 2 != 0){
+    //       if (k%2 == 0){
+    //         cout<<"NO"<<"\n";
+    //         return;
+    //     }
+    // }
+    
+    
+    if(esPrimo(x) && k==1){
+        cout<<"YES"<<"\n";
+        return;
+    } else {
+        cout<<"NO"<<"\n";
+        return;
     }
-    cout<<cont<<"\n";
 }
 
 int main(){
