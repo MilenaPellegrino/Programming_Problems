@@ -1,0 +1,9 @@
+*.cph
+*.exe
+*a.out
+*.vscode
+*.mypy_cache
+Main.jar
+.cph/
+*.in
+*.out
