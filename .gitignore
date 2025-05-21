@@ -7,3 +7,47 @@ Main.jar
 .cph/
 *.in
 *.out
+
+
+# Archivos auxiliares comunes de LaTeX
+*.aux
+*.bbl
+*.blg
+*.brf
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# Archivos de respaldo o temporales
+*.bak
+*.backup
+*.tmp
+*~
+*.swp
+
+# Archivos de compilación
+*.dvi
+*.ps
+*.pdf
+
+# Directorios comunes generados por editores
+_auto/
+_build/
+*.egg-info/

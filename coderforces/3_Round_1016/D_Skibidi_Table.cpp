@@ -25,32 +25,17 @@ typedef vector<char> vc;
 
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
-
-bool esPrimo(ll n) {
-    if (n <= 1) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (ll i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-
 void solve(){
-    ll x, k; cin>>x>>k;
-
-    if (x==1 && k ==2){
-        cout<<"YES"<<"\n";
-        return;
-    }
-    
-    if(esPrimo(x) && k==1){
-        cout<<"YES"<<"\n";
-        return;
-    } else {
-        cout<<"NO"<<"\n";
-        return;
+    ll n; cin>>n;
+    ll q; cin>>q;
+    cin.ignore();
+    while(q--){
+        string s; 
+        getline(cin, s);
+        cout<<s<<endl; 
+        fore(i, 0, sz(s)){
+            cout<<s[i]<<endl;
+        }
     }
 }
 

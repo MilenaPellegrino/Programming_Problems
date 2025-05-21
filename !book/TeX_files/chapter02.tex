@@ -57,3 +57,22 @@ Para números primos mayores, como 23, 29, etc., las reglas pueden volverse más
 	\item \textbf{División Directa}: La forma más directa de verificar la divisibilidad es realizar la división y ver si el residuo es cero.
 	\item \textbf{Uso de Factores}: Si un número es divisible por dos o más números coprimos, entonces es divisible por su producto. Por ejemplo, si un número es divisible por 3 y por 5, entonces es divisible por 15.
 \end{enumerate}
+
+
+\section{Números Primos}
+
+\subsection{Chequear si un número es primo}
+
+Complejidad: \( O(\sqrt{n}) \)
+\begin{lstlisting}[language=C++, caption={Chequear si un número es primo}]
+	bool esPrimo(int n) {
+		if (n <= 1) return false;
+		if (n == 2) return true;
+		if (n % 2 == 0) return false;
+		for (int i = 3; i * i <= n; i += 2)
+		if (n % i == 0)
+		return false;
+		return true;
+	}
+\end{lstlisting}
+

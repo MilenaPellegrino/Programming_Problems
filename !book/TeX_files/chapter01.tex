@@ -5,6 +5,23 @@ Estas notas explican recordatorios y cosas basicas en programación competitiva.
 Fueron escritas con la idea de usarla como notebook en competencias. 
 
 \section{Cosas de C++}
+
+\subsection*{Lectura de líneas con espacios en C++}
+
+En C++, para leer una línea completa que puede contener espacios (como una oración o una entrada con varios números separados), se utiliza:
+
+\begin{verbatim}
+	getline(std::cin, s);
+\end{verbatim}
+
+Sin embargo, si antes se usó \texttt{std::cin >>} (que deja un salto de línea \texttt{'\textbackslash n'} en el buffer), entonces \texttt{getline()} puede leer esa línea vacía. Para evitarlo, se debe limpiar el buffer con:
+
+\begin{verbatim}
+	cin.ignore();
+\end{verbatim}
+
+
+\subsection*{Tamaño de los tipos de datos}
 \begin{itemize}
 	\item \textbf{Tamaño de un long long}: Es un número de 64 bits, \( 2^{64} \) o aproximadamente \( 10^{19} \).
 \end{itemize}
