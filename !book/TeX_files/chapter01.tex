@@ -14,7 +14,13 @@ En C++, para leer una línea completa que puede contener espacios (como una orac
 	getline(std::cin, s);
 \end{verbatim}
 
-Sin embargo, si antes se usó \texttt{std::cin >>} (que deja un salto de línea \texttt{'\textbackslash n'} en el buffer), entonces \texttt{getline()} puede leer esa línea vacía. Para evitarlo, se debe limpiar el buffer con:
+\begin{quoting}
+	Sin embargo, si antes se usó \texttt{std::cin >>} (que deja un salto de línea \texttt{\textbackslash n} en el buffer), entonces \texttt{getline()} puede leer esa línea vacía. Para evitarlo, se debe limpiar el buffer con:
+	\begin{lstlisting}[language=C++]
+		std::cin.ignore();
+	\end{lstlisting}
+\end{quoting}
+
 
 \begin{verbatim}
 	cin.ignore();
@@ -25,3 +31,15 @@ Sin embargo, si antes se usó \texttt{std::cin >>} (que deja un salto de línea 
 \begin{itemize}
 	\item \textbf{Tamaño de un long long}: Es un número de 64 bits, \( 2^{64} \) o aproximadamente \( 10^{19} \).
 \end{itemize}
+
+\section{Cosas comunes en programación competitiva}
+\subsection*{MEX}
+En muchos problemas se suele hablar sobre MEX, aunque en la mayoria de problemas se suele explicar el concepto, esta bueno saberlo de antemano y ahorrarse un poco de tiempo entiendo a que se refiere. \\
+MEX es el acrónimo de Minimum EXcluded, se refiere al menor número natural en un arreglo (empezando de 0) que no está en el. \\
+Ejemplo: 
+
+\begin{enumerate}
+	\item MEX([0, 1, 2]) = 3
+	\item  MEX([1, 2, 3]) = 0
+	\item  MEX([0, 1, 3]) = 2
+\end{enumerate}

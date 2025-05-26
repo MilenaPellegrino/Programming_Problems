@@ -25,42 +25,85 @@ typedef vector<char> vc;
 
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
+const ll MAXN = 2e5 + 10;
+
+vi nums(MAXN, 0);
+
 //const ll NMIN = -(1e9 + 10);
+
+bool can(vi& v, ll k, ll m){
+    ll cnt = 0; 
+    ll act_mex = 0; 
+    fore(i, 0, sz(v)){
+        if(v[i] <= sz(v) + 1){
+            nums[v[i]] = 1;
+        }
+        while(nums[act_mex]){
+            act_mex++;
+        }
+        if(act_mex >= m){
+            cnt++;
+            ll mins = min(m+1, (ll)sz(v) + 2);
+            fore(j, 0, mins){
+                nums[j]= 0;
+            }
+            act_mex = 0;
+        }
+    }
+    fore(j, 0, sz(v)+2){
+        nums[j] = 0;
+    }
+    return cnt >= k;
+}
+
+
 void solve(){
     ll n; cin>>n; 
     ll k; cin>>k;
     vi a(n); fore(i, 0, n)cin>>a[i];
 
-    // Caso especial subarray = array -> k == 1
-    if(k==1){
-        vector<bool> vec(n+2, false);
-        fore(i, 0, n){
-            vec[a[i]] = true;
-        }
-        fore(i, 0, n+2){
-            if(vec[i] == false){
-                cout<<i<<"\n";
-                return;
-            }
-        }
-    }
+    // // Caso especial subarray = array -> k == 1
+    // if(k==1){
+    //     vector<bool> vec(n+2, false);
+    //     fore(i, 0, n){
+    //         vec[a[i]] = true;
+    //     }
+    //     fore(i, 0, n+2){
+    //         if(vec[i] == false){
+    //             cout<<i<<"\n";
+    //             return;
+    //         }
+    //     }
+    // }
 
-    // Caso especial k = n
-    if(k == n){
-        ll maxn = a[0];
-        fore(i, 0, n){
-            if (maxn < a[i]){
-                maxn = a[i];
-            }
-        }
-        if(maxn == 0){
-            cout<<1<<"\n";
+    // // Caso especial k = n
+    // if(k == n){
+    //     ll maxn = a[0];
+    //     fore(i, 0, n){
+    //         if (maxn < a[i]){
+    //             maxn = a[i];
+    //         }
+    //     }
+    //     if(maxn == 0){
+    //         cout<<1<<"\n";
+    //     } else {
+    //         cout<<0<<"\n";
+    //     }
+    //     return;
+    // }
+
+    // Caso general 
+    ll l =0; 
+    ll r = 1e9+10; 
+    while(r-l > 1){
+        ll m = (r + l)/2;
+        if (can(a, k, m)){
+            l = m;
         } else {
-            cout<<0<<"\n";
+            r = m;
         }
-        return;
     }
-    cout<<"NO HECHO"<<endl;
+    cout<<l<<"\n";
 }
 
 int main(){
