@@ -27,7 +27,24 @@ template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto
 
 void solve(){
     string s; cin>>s;
-    cout<<s<<endl;
+    ll s1 = s[0] - '0';
+    ll s2 = s[1] - '0';
+    ll s3 = s[2] - '0';
+    ll s4 = s[3] - '0';
+
+    ll num = stoll(s);
+    ll raiz = sqrt(num);
+    bool escuad = (raiz * raiz) == num;
+    if(!escuad){
+        cout<<-1<<"\n";
+        return;
+    }else {
+        ll num1 = raiz / 2; 
+        ll num2 = raiz - num1;
+        cout<<num1<<" "<<num2<<"\n";
+        return;
+    }
+
 }
 
 int main(){
