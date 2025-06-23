@@ -1,0 +1,43 @@
+\chapter{Búsquedas}
+
+\section{Búsqueda binaria en la respuesta}
+
+\begin{lstlisting}[style=cppstyle, caption={Busqueda binaria en la respuesta}]
+	bool can(int mid) {
+		// Esta funcion debe responder si con mid como respuesta
+		// es posible cumplir con la condicion del problema
+		
+		// Implementar la logica del chequeo
+		
+		return true;
+	}
+	
+	int main(){
+		// Busqueda binaria
+		int low = 0, high = 1e9; // Ajustar limites segun el problema
+		int ans = -1;
+		
+		while (low <= high) {
+			int mid = (low + high) / 2;
+			
+			// si queremos el minimo que cumple
+			if (check(mid)) {
+				ans = mid;        
+				high = mid - 1;
+			} else {
+				low = mid + 1;
+			}
+			
+			// Si queres el maximo que cumple:
+			if (check(mid)) {
+				ans = mid;
+				low = mid + 1;
+			} else {
+				high = mid - 1;
+			}
+		}
+		
+		cout << ans << endl;
+	}
+	
+\end{lstlisting}

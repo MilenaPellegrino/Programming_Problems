@@ -1,5 +1,40 @@
 \chapter{Matemática}
 
+\section{Operaciones basicas}
+
+\subsection{Obtener la raiz cuadrada}
+Para calcular la raíz cuadrada de un número en C++, se utiliza la función \texttt{sqrt()}.
+
+\bigskip
+
+\textbf{Ejemplo:}
+
+\begin{verbatim}
+		double x = 25.0;
+		double raiz = sqrt(x);
+\end{verbatim}
+
+\bigskip
+
+\textbf{Notas importantes:}
+\begin{itemize}
+	\item El resultado puede guardarse en un \texttt{double} para conservar la precisión decimal.
+	\item Si se guarda en un tipo entero, la parte decimal se truncará (se corta sin redondeo).
+\end{itemize}
+
+Complejidad: \( O(\sqrt{n}) \)
+\begin{lstlisting}[language=C++, caption={Chequear si un número es primo}]
+	bool esPrimo(int n) {
+		if (n <= 1) return false;
+		if (n == 2) return true;
+		if (n % 2 == 0) return false;
+		for (int i = 3; i * i <= n; i += 2)
+		if (n % i == 0)
+		return false;
+		return true;
+	}
+\end{lstlisting}
+
 \section{Reglas de Divisibilidad}
 
 Para determinar si un número es divisible por otro sin necesidad de hacer la división, se pueden usar las siguientes reglas de divisibilidad:
@@ -75,4 +110,5 @@ Complejidad: \( O(\sqrt{n}) \)
 		return true;
 	}
 \end{lstlisting}
+
 

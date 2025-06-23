@@ -1,0 +1,103 @@
+\chapter{Libreria Estandar C++ (STD)}
+
+\section{Queue (cola)}
+Las colas son estructuras first-in-first-out (FIFO). \\
+\textbf{Complejidad de todas las operaciones:} O(1)
+
+\begin{lstlisting}[style=cppstyle, caption={Funcionamiento de la queue}]
+	// Crear una queue:
+	queue<int> cola;
+	
+	// Insertar elemento al FINAL de la cola: 
+	cola.push(1)
+	
+	// Ver cuantos elementos tiene: 
+	cola.size()
+	
+	// Eliminar el primer elemento: 
+	cola.pop();
+	
+	// VER cual es el primer elemento: 
+	cola.front()
+	
+	// Ver si la cola esta vacia: 
+	if (cola.empty())
+\end{lstlisting}
+
+\section{Stack (pila)}
+Las colas son estructuras last-in-first-out (LIFO). \\
+\textbf{Complejidad de todas las operaciones:} O(1)
+
+\begin{lstlisting}[style=cppstyle, caption={Funcionamiento del stack}]
+	// Crear un stack:
+	stack<int> pila;
+	
+	// Insertar elemento al PRINCIPIO del stack: 
+	pila.push(1);
+	
+	// Ver cuantos elementos tiene: 
+	pila.size()
+	
+	// Eliminar el primer elemento: 
+	pila.pop();
+	
+	// VER cual es el primer elemento: 
+	pila.top()
+	
+	// Ver si la cola esta vacia: 
+	if (pila.empty())
+\end{lstlisting}
+
+\section{Set (conjunto)}
+Almacena valores unicos de un determinado tipo, ordenados automaticamente.
+
+
+\begin{lstlisting}[style=cppstyle, caption={Funcionamiento del stack}]
+	// Crear un set:
+	set<int> s;
+	
+	// Insertar un elemento:
+	s.insert(3);  // O(logn)
+	
+	// Ver cuantos elementos tiene: // O(1)
+	s.size()
+	
+	// Eliminar un elemento determinado: 
+	// Devuelve cuantos elementos borro
+	s.erase(1);  //  O(logn)
+	
+	// Borra todos los elementos
+	us.clear();
+	
+	// Verificar si un valor esta de forma rapido: 
+	if (s.count(x)) { ... }
+	
+	/* 
+	Busca si un valor existe en el set.
+	Si no lo encuentra, devuelve s.end()
+	*/
+	
+	s.find(3)  // O(logn)
+	
+	auto it = s.find(10);
+	if (it != s.end()) {
+		cout << "Encontrado: " << *it << endl;
+	} else {
+		cout << "No esta el 10\n";
+	}
+	
+	// Otra especie de busqueda
+	auto it = s.lower_bound(25); // primer elemento >= 25
+	auto it2 = s.upper_bound(30); // primer elemento > 30
+	
+	if (it != s.end()) cout << *it << endl;
+	if (it2 != s.end()) cout << *it2 << endl;
+	
+\end{lstlisting}
+
+\textbf{Otras alternativas a \texttt{set}:}
+\begin{itemize}
+	\item \texttt{multiset}: Permite duplicados, ordenados tambien.
+	\item \texttt{unordered\_set}: Operaciones en $\mathcal{O}(1)$ promedio, pero sin orden.
+\end{itemize}
+ 

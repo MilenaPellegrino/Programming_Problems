@@ -6,20 +6,26 @@ Fueron escritas con la idea de usarla como notebook en competencias.
 
 \section{Cosas de C++}
 
-\subsection*{Lectura de líneas con espacios en C++}
+\subsection{Lectura de líneas con espacios en C++}
 
 En C++, para leer una línea completa que puede contener espacios (como una oración o una entrada con varios números separados), se utiliza:
 
-\begin{verbatim}
+\begin{lstlisting}
 	getline(std::cin, s);
-\end{verbatim}
+\end{lstlisting}
 
-\begin{quoting}
-	Sin embargo, si antes se usó \texttt{std::cin >>} (que deja un salto de línea \texttt{\textbackslash n} en el buffer), entonces \texttt{getline()} puede leer esa línea vacía. Para evitarlo, se debe limpiar el buffer con:
-	\begin{lstlisting}[language=C++]
-		std::cin.ignore();
-	\end{lstlisting}
-\end{quoting}
+Sin embargo, si antes se usó 
+
+\begin{lstlisting}[language=C++]
+	std::cin >> variable;
+\end{lstlisting}
+
+entonces \texttt{getline()} puede leer una línea vacía. Para evitarlo, se debe limpiar el buffer con:
+
+\begin{lstlisting}[language=C++]
+	std::cin.ignore();
+\end{lstlisting}
+
 
 
 \begin{verbatim}
@@ -27,13 +33,41 @@ En C++, para leer una línea completa que puede contener espacios (como una orac
 \end{verbatim}
 
 
-\subsection*{Tamaño de los tipos de datos}
+\subsection{Tamaño de los tipos de datos}
 \begin{itemize}
 	\item \textbf{Tamaño de un long long}: Es un número de 64 bits, \( 2^{64} \) o aproximadamente \( 10^{19} \).
 \end{itemize}
 
+\subsection{Convertir String a Numero y Otras Conversiones}
+\begin{itemize}
+	\item \textbf{De string a int}: \texttt{int x = stoi("123");}
+	\item \textbf{De string a long long}: \texttt{ll y = stoll("9876543210");} 
+	\item \textbf{De numero a string}: \texttt{string s = to\_string(x);}
+\end{itemize}
+
+\begin{itemize}
+	\item Si el \texttt{char} representa un dígito (por ejemplo, \texttt{'0'} a \texttt{'9'}), se puede obtener el valor numérico restando el carácter \texttt{'0'}:
+	\begin{itemize}
+		\item \texttt{ll x = s[0] - '0';} \hfill // convierte el primer carácter del string \texttt{s} a número
+	\end{itemize}
+
+\end{itemize}
+\subsubsection{Char a num, $a \to $1, $b \to $2, $c \to $3}
+Dado un carácter en minúscula \( c \in \{a, b, \dots, z\} \), se puede obtener su posición en el alfabeto con la fórmula:
+
+\[
+\text{valor}(c) = \text{ord}(c) - \text{ord}('a') + 1
+\]
+
+Por ejemplo:
+\begin{verbatim}
+	char c = 'b';
+	int pos = c - 'a' + 1; // pos == 2
+\end{verbatim}
+
+
 \section{Cosas comunes en programación competitiva}
-\subsection*{MEX}
+\subsection{MEX}
 En muchos problemas se suele hablar sobre MEX, aunque en la mayoria de problemas se suele explicar el concepto, esta bueno saberlo de antemano y ahorrarse un poco de tiempo entiendo a que se refiere. \\
 MEX es el acrónimo de Minimum EXcluded, se refiere al menor número natural en un arreglo (empezando de 0) que no está en el. \\
 Ejemplo: 
@@ -43,3 +77,5 @@ Ejemplo:
 	\item  MEX([1, 2, 3]) = 0
 	\item  MEX([0, 1, 3]) = 2
 \end{enumerate}
+
+
