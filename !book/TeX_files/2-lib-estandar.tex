@@ -100,4 +100,50 @@ Almacena valores unicos de un determinado tipo, ordenados automaticamente.
 	\item \texttt{multiset}: Permite duplicados, ordenados tambien.
 	\item \texttt{unordered\_set}: Operaciones en $\mathcal{O}(1)$ promedio, pero sin orden.
 \end{itemize}
+
+\section{Representación Binaria en C++}
+\subsection{Mostrar un número en binario}
+
+La forma más directa es usando \texttt{bitset} de la STL:
+
+\begin{lstlisting}[language=C++, caption=Muestra un número en binario con 15 bits]
+	int main() {
+		int x = 13;
+		cout << bitset<15>(x) << endl; // Muestra: 000000000001101
+	}
+\end{lstlisting}
+
+\subsection{Obtener la representación binaria como cadena}
+
+Podemos obtener la representación binaria como un \texttt{string}:
+
+\begin{lstlisting}[language=C++, caption=Convertir un número a cadena binaria]
+	int main() {
+		int x = 13;
+		string bin = bitset<15>(x).to_string(); // "000000000001101"
+	}
+\end{lstlisting}
+
+\subsection{Conversión binaria manual}
+
+También podemos implementar la conversión binaria manualmente:
+
+\begin{lstlisting}[language=C++, caption=Conversión manual de decimal a binario]
+	
+	void mostrar_binario(int n) {
+		if (n == 0) {
+			cout << "0";
+			return;
+		}
+		string bin = "";
+		while (n > 0) {
+			bin = char('0' + (n % 2)) + bin;
+			n /= 2;
+		}
+		cout << bin << endl;
+	}
+\end{lstlisting}
+
+
+
  

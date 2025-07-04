@@ -1,0 +1,458 @@
+\chapter{Grafos}
+
+
+\section{Representaciones comunes}
+
+\subsection*{Lista de adyacencia}
+
+\begin{lstlisting}[caption=Lista de adyacencia]
+	vector<int> G[MAXN]; // grafo sin peso
+	
+	void agregar_arista(int u, int v) {
+		G[u].push_back(v);
+		G[v].push_back(u); // si es no dirigido
+	}
+\end{lstlisting}
+
+\subsection*{Matriz de adyacencia}
+
+\begin{lstlisting}[caption=Matriz de adyacencia]
+	bool mat[MAXN][MAXN];
+	
+	void agregar_arista(int u, int v) {
+		mat[u][v] = true;
+		mat[v][u] = true; // si es no dirigido
+	}
+\end{lstlisting}
+
+\section{Recorridos clásicos}
+
+\subsection{DFS (Depth-First Search)}
+
+\begin{lstlisting}[caption=DFS no dirigido]
+	bool vis[MAXN];
+	vector<int> G[MAXN];
+	
+	void dfs(int u) {
+		vis[u] = true;
+		for (int v : G[u]) {
+			if (!vis[v]) dfs(v);
+		}
+	}
+\end{lstlisting}
+
+\subsection{BFS (Breadth-First Search)}
+
+\begin{lstlisting}[caption=BFS con cálculo de distancias]
+	int dist[MAXN];
+	bool vis[MAXN];
+	vector<int> G[MAXN];
+	
+	void bfs(int s) {
+		queue<int> q;
+		q.push(s);
+		vis[s] = true;
+		dist[s] = 0;
+		
+		while (!q.empty()) {
+			int u = q.front(); q.pop();
+			for (int v : G[u]) {
+				if (!vis[v]) {
+					vis[v] = true;
+					dist[v] = dist[u] + 1;
+					q.push(v);
+				}
+			}
+		}
+	}
+\end{lstlisting}
+
+\section{Componentes conexas}
+
+\begin{lstlisting}[caption=Contar componentes conexas]
+	int comp = 0;
+	
+	for (int i = 0; i < n; ++i) {
+		if (!vis[i]) {
+			dfs(i);
+			comp++;
+		}
+	}
+\end{lstlisting}
+
+\section{Dijkstra (caminos mínimos)}
+
+\begin{lstlisting}[caption=Dijkstra con priority queue]
+	typedef pair<int, int> pii;
+	vector<pii> G[MAXN]; // {peso, destino}
+	int dist[MAXN];
+	
+	void dijkstra(int s) {
+		priority_queue<pii, vector<pii>, greater<pii>> pq;
+		fill(dist, dist + MAXN, INF);
+		dist[s] = 0;
+		pq.push({0, s});
+		
+		while (!pq.empty()) {
+			auto [d, u] = pq.top(); pq.pop();
+			if (d > dist[u]) continue;
+			for (auto [w, v] : G[u]) {
+				if (dist[u] + w < dist[v]) {
+					dist[v] = dist[u] + w;
+					pq.push({dist[v], v});
+				}
+			}
+		}
+	}
+\end{lstlisting}
+
+\section{Bellman-Ford}
+
+\begin{lstlisting}[caption=Bellman-Ford para grafos con pesos negativos]
+	vector<tuple<int, int, int>> edges; // {u, v, peso}
+	int dist[MAXN];
+	
+	bool bellman(int s, int n) {
+		fill(dist, dist + MAXN, INF);
+		dist[s] = 0;
+		
+		for (int i = 0; i < n - 1; ++i) {
+			for (auto [u, v, w] : edges) {
+				if (dist[u] + w < dist[v]) {
+					dist[v] = dist[u] + w;
+				}
+			}
+		}
+		
+		// Detectar ciclos negativos
+		for (auto [u, v, w] : edges) {
+			if (dist[u] + w < dist[v]) return true;
+		}
+		
+		return false;
+	}
+\end{lstlisting}
+
+\section{Problemas clásicos}
+
+\subsection*{A - Número de componentes conexas}
+
+\textbf{Estado:} nodos visitados.  
+\textbf{Recorrido:} DFS o BFS.  
+\textbf{Complejidad:} \( O(n + m) \)
+
+\subsection*{B - Camino más corto (no ponderado)}
+
+\textbf{Idea:} usar BFS desde el nodo origen y guardar las distancias.
+
+\subsection*{C - Dijkstra / Bellman-Ford}
+
+\textbf{Cuando usar cada uno:}
+
+- Dijkstra → aristas no negativas.
+- Bellman-Ford → permite pesos negativos.
+
+\section{¿Cómo verificar si un grafo es una línea (path)?}
+
+
+
+\begin{enumerate}
+	\item Verificar que \( M = N - 1 \) (condición necesaria para ser un árbol).
+	\item Verificar que el grafo es conexo (DFS o BFS desde cualquier nodo).
+	\item Contar los grados de los nodos:
+	\begin{itemize}
+		\item Debe haber exactamente 2 nodos con grado 1.
+		\item Todos los demás deben tener grado 2.
+	\end{itemize}
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Verificar si un grafo es una línea]
+	vector<int> G[MAXN];
+	bool vis[MAXN];
+	int deg[MAXN];
+	
+	void dfs(int u) {
+		vis[u] = true;
+		for (int v : G[u]) {
+			if (!vis[v]) dfs(v);
+		}
+	}
+	
+	bool es_linea(int n, int m) {
+		if (m != n - 1) return false; // debe tener N-1 aristas
+		
+		// verificar conectividad
+		fill(vis, vis + n, false);
+		dfs(0);
+		for (int i = 0; i < n; ++i)
+		if (!vis[i]) return false;
+		
+		// contar grados
+		int cnt_deg1 = 0;
+		for (int i = 0; i < n; ++i) {
+			if (deg[i] == 1) cnt_deg1++;
+			else if (deg[i] != 2) return false;
+		}
+		
+		return cnt_deg1 == 2;
+	}
+\end{lstlisting}
+
+\textbf{Entrada:}
+\begin{itemize}
+	\item Llenar \texttt{G[i]} con las aristas del grafo.
+	\item Aumentar \texttt{deg[u]} y \texttt{deg[v]} cada vez que se agrega una arista entre \( u \) y \( v \).
+\end{itemize}
+		
+\section{Detectar ciclos en grafo no dirigido}
+
+\begin{enumerate}
+	\item Usar DFS manteniendo el nodo padre
+	\item Si encuentras un nodo ya visitado que no es el padre, hay ciclo
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Detectar ciclos en grafo no dirigido]
+	vector<int> G[MAXN];
+	bool vis[MAXN];
+	
+	bool hasCycleUndirected(int u, int parent) {
+		vis[u] = true;
+		for (int v : G[u]) {
+			if (!vis[v]) {
+				if (hasCycleUndirected(v, u)) 
+				return true;
+			}
+			else if (v != parent) 
+			return true;
+		}
+		return false;
+	}
+	
+	bool tieneCicloNoDirigido(int n) {
+		fill(vis, vis + n, false);
+		for (int i = 0; i < n; ++i) {
+			if (!vis[i] && hasCycleUndirected(i, -1))
+			return true;
+		}
+		return false;
+	}
+\end{lstlisting}
+
+\section{Detectar ciclos en grafo dirigido}
+
+\begin{enumerate}
+	\item Usar DFS con colores (0: no visitado, 1: en proceso, 2: visitado)
+	\item Si encuentras un nodo "en proceso" durante el DFS, hay ciclo
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Detectar ciclos en grafo dirigido]
+	vector<int> G[MAXN];
+	int color[MAXN]; // 0: blanco (no visitado), 1: gris (en proceso), 2: negro (visitado)
+	
+	bool hasCycleDirected(int u) {
+		color[u] = 1; // gris
+		for (int v : G[u]) {
+			if (color[v] == 0) {
+				if (hasCycleDirected(v)) 
+				return true;
+			} 
+			else if (color[v] == 1) 
+			return true;
+		}
+		color[u] = 2; // negro
+		return false;
+	}
+	
+	bool tieneCicloDirigido(int n) {
+		fill(color, color + n, 0);
+		for (int i = 0; i < n; ++i) {
+			if (color[i] == 0 && hasCycleDirected(i))
+			return true;
+		}
+		return false;
+	}
+\end{lstlisting}
+
+\section{Verificar si hay ciclo impar}
+
+\begin{enumerate}
+	\item Intentar colorear el grafo con 2 colores (bipartición)
+	\item Si no es posible, contiene ciclo impar
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Detectar ciclo impar]
+	vector<int> G[MAXN];
+	int col[MAXN]; // 0 o 1
+	
+	bool tieneCicloImpar(int n) {
+		queue<int> q;
+		fill(col, col + n, -1);
+		
+		col[0] = 0;
+		q.push(0);
+		
+		while (!q.empty()) {
+			int u = q.front(); q.pop();
+			for (int v : G[u]) {
+				if (col[v] == -1) {
+					col[v] = 1 - col[u];
+					q.push(v);
+				}
+				else if (col[v] == col[u]) {
+					return true; // Ciclo impar encontrado
+				}
+			}
+		}
+		return false;
+	}
+\end{lstlisting}
+
+\section{Verificar si el grafo es bipartito}
+
+\begin{enumerate}
+	\item Igual que detectar ciclo impar, pero devolviendo el resultado inverso
+	\item Si se puede colorear con 2 colores, es bipartito
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Verificar si grafo es bipartito]
+	vector<int> G[MAXN];
+	int col[MAXN]; // 0 o 1
+	
+	bool esBipartito(int n) {
+		queue<int> q;
+		fill(col, col + n, -1);
+		
+		col[0] = 0;
+		q.push(0);
+		
+		while (!q.empty()) {
+			int u = q.front(); q.pop();
+			for (int v : G[u]) {
+				if (col[v] == -1) {
+					col[v] = 1 - col[u];
+					q.push(v);
+				}
+				else if (col[v] == col[u]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+\end{lstlisting}
+
+\section{Distancia mínima desde un nodo}
+
+\begin{enumerate}
+	\item Usar BFS para calcular distancias desde el nodo fuente
+	\item Mantener arreglo de distancias inicializado en -1
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Distancia mínima con BFS]
+	vector<int> G[MAXN];
+	int dist[MAXN];
+	
+	void bfs(int s, int n) {
+		queue<int> q;
+		fill(dist, dist + n, -1);
+		
+		dist[s] = 0;
+		q.push(s);
+		
+		while (!q.empty()) {
+			int u = q.front(); q.pop();
+			for (int v : G[u]) {
+				if (dist[v] == -1) {
+					dist[v] = dist[u] + 1;
+					q.push(v);
+				}
+			}
+		}
+	}
+\end{lstlisting}
+
+\section{Verificar si el grafo es un árbol}
+
+\begin{enumerate}
+	\item Verificar que tiene exactamente N-1 aristas
+	\item Verificar que es conexo
+	\item Verificar que no tiene ciclos
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Verificar si grafo es árbol]
+	vector<int> G[MAXN];
+	bool vis[MAXN];
+	
+	bool hasCycle(int u, int parent) {
+		vis[u] = true;
+		for (int v : G[u]) {
+			if (!vis[v]) {
+				if (hasCycle(v, u)) return true;
+			}
+			else if (v != parent) return true;
+		}
+		return false;
+	}
+	
+	bool esArbol(int n, int m) {
+		if (m != n - 1) return false;
+		
+		// Verificar conexidad
+		fill(vis, vis + n, false);
+		hasCycle(0, -1);
+		for (int i = 0; i < n; ++i)
+		if (!vis[i]) return false;
+		
+		// Verificar que no tiene ciclos
+		fill(vis, vis + n, false);
+		if (hasCycle(0, -1)) return false;
+		
+		return true;
+	}
+\end{lstlisting}
+
+\section{Número de hojas en un árbol}
+
+\begin{enumerate}
+	\item Contar nodos con grado 1 (excepto posiblemente la raíz en árboles enraizados)
+\end{enumerate}
+
+\subsection*{Código en C++}
+
+\begin{lstlisting}[caption=Contar hojas en un árbol]
+	vector<int> G[MAXN];
+	int deg[MAXN];
+	
+	int contarHojas(int n) {
+		int hojas = 0;
+		for (int i = 0; i < n; ++i) {
+			if (G[i].size() == 1) // grado 1
+			hojas++;
+		}
+		return hojas;
+	}
+\end{lstlisting}
+
+\section{Consejos}
+
+\begin{itemize}
+	\item Usá listas de adyacencia para eficiencia en espacio.
+	\item Siempre inicializá `vis[]` y `dist[]` antes de usarlos.
+	\item Para grafos dirigidos, no agregues `v → u` si no se especifica.
+	\item En competencias, muchos problemas de grafos se reducen a BFS/DFS/Dijkstra.
+	\item Si el grafo tiene pesos negativos, ¡no uses Dijkstra!
+\end{itemize}

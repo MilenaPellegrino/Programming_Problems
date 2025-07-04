@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define fore(i,a,b) for(int i=(a);i<(b);i++)
-#define forr(i, a, b) for(int i=(b);i>(a);i--)
+#define fore(i,a,b) for(ll i=(a);i<(b);i++)
+#define rof(i, a, b) for(ll i=(b);i>(a);i--)
 #define forn(e,c) for(const auto &e : (c))
 #define db(x) cout<<#x<< " = "<<(x)<<endl
 #define sz(x) ((int)x.size())
@@ -17,46 +17,50 @@ using namespace std;
 #define FIN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0); 
 using ll = long long;
 using pii = pair<int,int>;
-using pll = pair<ll,ll>;
-using vii = vector<int>;
-using vi = vector<ll>;
-using vll = vector<ll>;
-using vpi = vector<pii>;
-using vvll = vector<vector<ll>>;
+typedef pair<ll, ll> ii;
+typedef vector<ii> vii;
+typedef vector<ll> vi;
+typedef vector<vi> vvi;
+typedef vector<char> vc;
+
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
-void solve(){
-	int n; cin>>n;  
-    vvll ady(n+1); 
-    // ady[1] = {1, 2, 3} 
-    fore(i, 2, n+1){
-        ll ai; cin>>ai;
-        ady[ai].pb(i);
-    }
-   
-    fore(i, 1, n+1){
-        ll leaf = 0; 
-        if (ady[i].empty()) continue;
+const ll MAXN = 1e6+10;
+ll n;
+ll dp[MAXN], a[MAXN];
 
-        for (ll child : ady[i]){
-            if(ady[child].empty()) leaf++;
-        }
+ll f(ll x){
+    ll &res = dp[x];
+    if (res != -1) return res;
 
-        if(leaf < 3){
-            cout<<"NO"<<"\n";
-            return;
-        }
+    // caso base: 
+    if (2 * x >= (1LL << n)){
+        res = a[x];
+        return res;
     }
-    cout<<"YES\n";
-	
+
+    // caso recursivo
+    res = a[x] + max(f(2*x), f(2 * x + 1));
+    return res;
 }
- 
+
+void solve(){
+    cin>>n;
+    ll nmax = pow(2, n) - 1;
+    fore(i, 1, nmax+1)cin>>a[i];
+    //mset(dp, -1);
+    fill(dp, dp + MAXN, -1);
+    ll res = f(1);
+    pri(res);
+
+}
+
 int main(){
     FIN; 
     int t = 1;
     //int t; cin>>t; 
     while(t--){
-		solve();
-	}
+        solve();
+    }
     return 0;
 }
