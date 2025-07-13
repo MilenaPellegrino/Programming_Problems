@@ -25,12 +25,14 @@ typedef vector<char> vc;
 
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
-set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-
+const ll MAXN = 1e5+10;
 void solve(){
     ll n; cin>>n;
+    vi a(n); fore(i, 0, n)cin>>a[i]; 
+    ll nmax = -1;
+    fore(i, 0, MAXN){
+
+    }
 }
 
 int main(){

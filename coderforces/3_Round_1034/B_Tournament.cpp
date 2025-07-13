@@ -30,7 +30,23 @@ set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
-    ll n; cin>>n;
+    ll n, j, k; cin>>n>>j>>k;
+    vi a(n); fore(i, 0, n)cin>>a[i]; 
+    vi cant(n+10, 0);
+    fore(i, 0, n){
+        cant[a[i]]++;
+    }
+    ll nums = a[j-1]; 
+    sort(all(a)); 
+    bool first = nums == a[0];
+    bool second = false; 
+    if (cant[nums] == 1) second = true;
+    if (first && second){
+        cout<<"NO"<<"\n";
+    } else {
+        cout<<"YES"<<"\n";
+    }
+
 }
 
 int main(){

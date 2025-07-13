@@ -31,6 +31,11 @@ set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
     ll n; cin>>n;
+    if(n%4 == 0){
+        cout<<"Bob"<<"\n";
+    } else {
+        cout<<"Alice"<<"\n";
+    }
 }
 
 int main(){
