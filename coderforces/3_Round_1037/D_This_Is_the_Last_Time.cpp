@@ -30,19 +30,25 @@ set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
-    ll n, j, k; cin>>n>>j>>k;
-    vi a(n); fore(i, 0, n)cin>>a[i]; 
-    
-    ll res = 0;
+    ll n; cin>>n;
+    ll k; cin>>k; 
+    vector<vector<ll>> a(n, vi(3)); 
     fore(i, 0, n){
-        if(a[i]> a[j-1])res++;
+        ll li, ri, reali; cin>>li>>ri>>reali; 
+        a[i][0] = li;
+        a[i][1] = ri;
+        a[i][2] = reali;
     }
-    if(res <= k){
-        cout<<"YES\n";
-    }else{
-        cout<<"NO\n";
+    
+    sort(all(a));
+    ll cur = k;
+    
+    fore(i, 0, n){
+        if(a[i][0] <= cur && cur <= a[i][1]){
+            cur = max(cur, a[i][2]);
+        }
     }
-
+    pri(cur);
 }
 
 int main(){

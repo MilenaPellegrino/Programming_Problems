@@ -30,19 +30,26 @@ set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
-    ll n, j, k; cin>>n>>j>>k;
-    vi a(n); fore(i, 0, n)cin>>a[i]; 
-    
-    ll res = 0;
+    ll n; cin>>n;
+    ll k; cin>>k; 
+    vi a(n); 
+    fore(i, 0, n)cin>>a[i];
+    ll res  = 0;
+    ll cont = 0;
     fore(i, 0, n){
-        if(a[i]> a[j-1])res++;
+        if(a[i] == 0 && cont<k){
+            //res++;
+            cont++;
+             if (cont ==k){
+                res++; 
+                cont = 0;
+                i++;
+            } 
+        } else if (a[i] == 1){
+            cont = 0;
+        }
     }
-    if(res <= k){
-        cout<<"YES\n";
-    }else{
-        cout<<"NO\n";
-    }
-
+    pri(res);
 }
 
 int main(){

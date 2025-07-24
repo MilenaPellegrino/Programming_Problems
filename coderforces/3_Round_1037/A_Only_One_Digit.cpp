@@ -30,18 +30,14 @@ set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
-    ll n, j, k; cin>>n>>j>>k;
-    vi a(n); fore(i, 0, n)cin>>a[i]; 
-    
-    ll res = 0;
-    fore(i, 0, n){
-        if(a[i]> a[j-1])res++;
+    string s; cin>>s; 
+    char c = s[0];
+    fore(i, 0, sz(s)){
+        if(s[i]<c){
+            c = s[i];
+        }
     }
-    if(res <= k){
-        cout<<"YES\n";
-    }else{
-        cout<<"NO\n";
-    }
+    cout<<c<<"\n";
 
 }
 

@@ -29,20 +29,38 @@ set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
+bool can(ll am, vi& h){
+
+}
 void solve(){
-    ll n, j, k; cin>>n>>j>>k;
-    vi a(n); fore(i, 0, n)cin>>a[i]; 
-    
-    ll res = 0;
-    fore(i, 0, n){
-        if(a[i]> a[j-1])res++;
-    }
-    if(res <= k){
-        cout<<"YES\n";
-    }else{
-        cout<<"NO\n";
+    ll n; cin>>n;
+    ll k; cin>>k; 
+    vi h(n); fore(i, 0, n)cin>>h[i];
+
+    ll pos = 0; 
+    ll num = h[k-1];
+    sort(all(h)); 
+    // cout<<h<<endl;
+    // db(num);
+    for(ll i = n-1; i>=0; i--){
+        if(h[i] == num){
+            pos = i; 
+            break;
+        }
     }
 
+    ll mom = 0;
+    //ll water = 1;
+    fore(i, pos+1, n){
+        mom += abs(h[i] - num);
+        if (mom > num){
+            cout<<"NO\n";
+            return;
+        } else {
+            num = h[i];
+        }
+    }
+    cout<<"YES\n";
 }
 
 int main(){
