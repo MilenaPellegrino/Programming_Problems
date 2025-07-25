@@ -29,24 +29,39 @@ set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
+ll gcd (ll a, ll b){
+    while(b!=0){
+        ll rest = a % b;
+        a = b;
+        b = rest;
+    }
+    return a;
+}
+
+
 void solve(){
-    ll n, j, k; cin>>n>>j>>k;
-    vi a(n); fore(i, 0, n)cin>>a[i]; 
-    
-    if(k>1){
-        cout<<"YES\n"; 
+    ll a, b, k; cin>>a>>b>>k;
+
+    // para la izquierda
+    ll izq = a; 
+    ll sub = b;
+
+    if(izq <= k && sub <= k){
+        cout<<1<<"\n";
         return;
     }
-
-    ll maxs = a[0]; 
-    fore(i, 0, n){
-        maxs = max(a[i], maxs);
-    }
-    if(maxs == a[j-1]){
-        cout<<"YES\n";
+    if(izq == sub){
+        cout<<1<<"\n";
+        return;
+    } 
+    ll g = gcd(a, b); 
+    if( a / g <= k && b / g <= k){
+        cout<<1<<"\n";
     }else{
-        cout<<"NO\n";
+        cout<<2<<"\n";
     }
+
+
 }
 
 int main(){

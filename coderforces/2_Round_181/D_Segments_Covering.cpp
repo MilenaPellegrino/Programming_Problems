@@ -30,23 +30,8 @@ set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
-    ll n, j, k; cin>>n>>j>>k;
-    vi a(n); fore(i, 0, n)cin>>a[i]; 
-    
-    if(k>1){
-        cout<<"YES\n"; 
-        return;
-    }
-
-    ll maxs = a[0]; 
-    fore(i, 0, n){
-        maxs = max(a[i], maxs);
-    }
-    if(maxs == a[j-1]){
-        cout<<"YES\n";
-    }else{
-        cout<<"NO\n";
-    }
+    ll n; cin>>n;
+    ll m; cin>>m;
 }
 
 int main(){

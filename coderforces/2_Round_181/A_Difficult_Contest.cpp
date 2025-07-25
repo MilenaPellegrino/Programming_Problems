@@ -30,23 +30,31 @@ set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
-    ll n, j, k; cin>>n>>j>>k;
-    vi a(n); fore(i, 0, n)cin>>a[i]; 
-    
-    if(k>1){
-        cout<<"YES\n"; 
-        return;
+    string s; cin>>s; 
+    string s2 = s;
+    reverse(all(s2));
+    // fore(i, 0, sz(s)-1){
+    //     if(s[i] == 'F' && s[i+1] == 'T'){
+    //         swap(s[i], s[i+1]);
+    //     }
+    //     if(s[i] == 'N' && s[i+1] == 'T'){
+    //         swap(s[i], s[i+1]);
+    //     }
+    // }
+    // cout<<s<<"\n";
+    //cout<<s2<<"\n";
+    string res;
+    fore(i, 0, sz(s2)){
+        if(s2[i] == 'T'){
+            res += s2[i];
+        }
     }
-
-    ll maxs = a[0]; 
-    fore(i, 0, n){
-        maxs = max(a[i], maxs);
+    fore(i, 0, sz(s2)){
+        if(s2[i] != 'T'){
+            res+= s2[i];
+        }
     }
-    if(maxs == a[j-1]){
-        cout<<"YES\n";
-    }else{
-        cout<<"NO\n";
-    }
+    cout<<res<<"\n";
 }
 
 int main(){
