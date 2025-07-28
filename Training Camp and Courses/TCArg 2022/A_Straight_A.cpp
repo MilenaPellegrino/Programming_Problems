@@ -4,7 +4,6 @@ using namespace std;
 #define rof(i, a, b) for(ll i=(b);i>(a);i--)
 #define forn(e,c) for(const auto &e : (c))
 #define db(x) cout<<#x<< " = "<<(x)<<endl
-#define RAYA cout<<"=============="<<"\n"
 #define sz(x) ((int)x.size())
 #define all(x) (x).begin(),(x).end()
 #define pb push_back
@@ -29,15 +28,35 @@ template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto
 set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-QUE P
+
+ll divs (ll sum, ll count) {
+    double avg = (double)sum / count;
+    return (ll)(floor(avg + 0.5));
+}
+
 void solve(){
     ll n; cin>>n;
+    ll k; cin>>k;
+    vi a(n); fore(i, 0, n)cin>>a[i];
+    ll res = 0; 
+    fore(i, 0, n){
+        res += a[i];
+    }
+    ll sums = res;
+    res = divs(res, n);
+    ll cont = 0;
+    while(res != k){
+        sums += k;
+        cont++;
+        res = divs(sums, n + cont);
+    }
+    pri(cont);
 }
 
 int main(){
     FIN; 
-    //int t = 1;
-    int t; cin>>t; 
+    int t = 1;
+    //int t; cin>>t; 
     while(t--){
         solve();
     }

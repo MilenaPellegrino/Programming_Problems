@@ -4,7 +4,6 @@ using namespace std;
 #define rof(i, a, b) for(ll i=(b);i>(a);i--)
 #define forn(e,c) for(const auto &e : (c))
 #define db(x) cout<<#x<< " = "<<(x)<<endl
-#define RAYA cout<<"=============="<<"\n"
 #define sz(x) ((int)x.size())
 #define all(x) (x).begin(),(x).end()
 #define pb push_back
@@ -29,9 +28,19 @@ template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto
 set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-QUE P
+
 void solve(){
     ll n; cin>>n;
+    ll m; cin>>m; 
+    if(n==1 || m== 1){
+        cout<<"NO\n"; 
+        return;
+    } else if (n == 2 && m == 2){
+        cout<<"NO\n";
+        return;
+    } 
+    cout<<"YES\n";
+
 }
 
 int main(){

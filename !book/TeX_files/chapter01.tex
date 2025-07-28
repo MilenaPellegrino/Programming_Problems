@@ -65,6 +65,17 @@ Por ejemplo:
 	int pos = c - 'a' + 1; // pos == 2
 \end{verbatim}
 
+\subsection{Ordenar vector de pares por el segundo elemento}
+\begin{lstlisting}[language=C++, caption={Ordenar vector de pares por el segundo elemento}]
+	
+		// Ordenar por el segundo elemento del par
+		
+		sort(v.begin(), v.end(), 
+		[](const pair<int, int> &a, const pair<int, int> &b) {
+			return a.second < b.second;
+		});
+		
+\end{lstlisting}
 
 \section{Cosas comunes en programación competitiva}
 \subsection{MEX}
