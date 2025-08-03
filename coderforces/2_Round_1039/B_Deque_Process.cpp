@@ -4,6 +4,7 @@ using namespace std;
 #define rof(i, a, b) for(ll i=(b);i>(a);i--)
 #define forn(e,c) for(const auto &e : (c))
 #define db(x) cout<<#x<< " = "<<(x)<<endl
+#define RAYA cout<<"=============="<<"\n"
 #define sz(x) ((int)x.size())
 #define all(x) (x).begin(),(x).end()
 #define pb push_back
@@ -29,20 +30,40 @@ set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
+char L = 'L';
+char R = 'R';
 void solve(){
     ll n; cin>>n;
-    ll px, py, qx, qy; cin>>px>>py>>qx>>qy;
     vi a(n); fore(i, 0, n)cin>>a[i];
-    ll dist = sqrt(((px - qx) * (px - qx)) + ((py - qy) * (py - qy)));
-    ll sum = 0; 
-    fore(i, 0, n){
-        sum+= a[i];
+    vector<char> res;
+    ll l = 0,  r = n-1;
+    bool MENOR = true;
+    while(l<=r){
+        if (MENOR){
+            if(a[l] < a[r]){
+                res.pb(L);
+                l++;
+            } else{
+                res.pb(R); 
+                r--;
+            }
+            MENOR = false;
+        } else {
+            if(a[l] < a[r]){
+                res.pb(R);
+                r--;
+            } else{
+                res.pb(L); 
+                l++;
+            }
+            MENOR = true;;
+        }
+        
     }
-    if (sum>dist){
-        cout<<"Yes\n"; 
-    } else{
-        cout<<"No\n";
+    fore(i, 0, sz(res)){
+        cout<<res[i];
     }
+    cout<<"\n";
 }
 
 int main(){

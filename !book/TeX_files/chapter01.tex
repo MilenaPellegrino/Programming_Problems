@@ -65,17 +65,31 @@ Por ejemplo:
 	int pos = c - 'a' + 1; // pos == 2
 \end{verbatim}
 
-\subsection{Ordenar vector de pares por el segundo elemento}
-\begin{lstlisting}[language=C++, caption={Ordenar vector de pares por el segundo elemento}]
+\subsection*{Ordenar partes (subrangos) de un vector}
+
+En C++, se puede ordenar una parte de un vector (es decir, un subrango) utilizando la función \texttt{sort} de la STL, especificando iteradores de inicio y fin.
+
+Esto es especialmente útil cuando se necesita dividir un conjunto en mitades o grupos, por ejemplo, para aplicar diferentes criterios de ordenamiento en cada parte.
+
+\begin{verbatim}
+	// Supongamos que tenemos un vector de arreglos de 3 enteros:
+	vector<array<ll, 3>> v(n);
 	
-		// Ordenar por el segundo elemento del par
-		
-		sort(v.begin(), v.end(), 
-		[](const pair<int, int> &a, const pair<int, int> &b) {
-			return a.second < b.second;
-		});
-		
-\end{lstlisting}
+	// Ordenamos toda la colección por defecto (lexicográficamente):
+	sort(v.begin(), v.end());
+	
+	// Ordenamos sólo la primera mitad del vector por el segundo campo (índice 1):
+	sort(v.begin(), v.begin() + n/2, [](const array<ll, 3> &a, const array<ll, 3> &b) {
+		return a[1] < b[1];
+	});
+	
+	// Ordenamos la segunda mitad también por el segundo campo:
+	sort(v.begin() + n/2, v.end(), [](const array<ll, 3> &a, const array<ll, 3> &b) {
+		return a[1] < b[1];
+	});
+\end{verbatim}
+
+\textbf{Aplicación:} esta técnica aparece frecuentemente en problemas donde hay que emparejar elementos de dos mitades, o donde diferentes partes del conjunto deben ser tratadas con diferentes estrategias (\textit{divide and conquer}, emparejamientos balanceados, etc.).
 
 \section{Cosas comunes en programación competitiva}
 \subsection{MEX}

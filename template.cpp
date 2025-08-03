@@ -29,7 +29,9 @@ template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto
 set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-QUE P
+string YES = "YES\n"; 
+string NO = "NO\n";
+
 void solve(){
     ll n; cin>>n;
 }

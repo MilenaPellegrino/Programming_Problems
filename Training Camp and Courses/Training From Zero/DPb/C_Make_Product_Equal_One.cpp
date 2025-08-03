@@ -4,6 +4,7 @@ using namespace std;
 #define rof(i, a, b) for(ll i=(b);i>(a);i--)
 #define forn(e,c) for(const auto &e : (c))
 #define db(x) cout<<#x<< " = "<<(x)<<endl
+#define RAYA cout<<"=============="<<"\n"
 #define sz(x) ((int)x.size())
 #define all(x) (x).begin(),(x).end()
 #define pb push_back
@@ -28,27 +29,40 @@ template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto
 set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+string YES = "YES\n"; 
+string NO = "NO\n";
 
 void solve(){
     ll n; cin>>n;
-    ll px, py, qx, qy; cin>>px>>py>>qx>>qy;
     vi a(n); fore(i, 0, n)cin>>a[i];
-    ll dist = sqrt(((px - qx) * (px - qx)) + ((py - qy) * (py - qy)));
-    ll sum = 0; 
+    ll cantneg = 0; 
+    ll cantcero = 0;
+    ll sum = 0;
     fore(i, 0, n){
-        sum+= a[i];
+        if(a[i] == -1){
+            cantneg++;
+        } else if (a[i] == 0){
+            cantcero++;
+            continue;
+        }else if(a[i]>1){
+            sum+= a[i] - 1;
+        } else if (a[i] < -1){
+            sum += -1 - a[i];
+            cantneg++;
+        }
     }
-    if (sum>dist){
-        cout<<"Yes\n"; 
-    } else{
-        cout<<"No\n";
+
+    sum += cantcero;
+    if (cantneg % 2 == 1 && cantcero == 0) {
+        sum += 2;
     }
+    pri(sum);
 }
 
 int main(){
     FIN; 
-    //int t = 1;
-    int t; cin>>t; 
+    int t = 1;
+    //int t; cin>>t; 
     while(t--){
         solve();
     }

@@ -4,6 +4,7 @@ using namespace std;
 #define rof(i, a, b) for(ll i=(b);i>(a);i--)
 #define forn(e,c) for(const auto &e : (c))
 #define db(x) cout<<#x<< " = "<<(x)<<endl
+#define RAYA cout<<"=============="<<"\n"
 #define sz(x) ((int)x.size())
 #define all(x) (x).begin(),(x).end()
 #define pb push_back
@@ -31,18 +32,23 @@ set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 void solve(){
     ll n; cin>>n;
-    ll px, py, qx, qy; cin>>px>>py>>qx>>qy;
+    ll c; cin>>c;
     vi a(n); fore(i, 0, n)cin>>a[i];
-    ll dist = sqrt(((px - qx) * (px - qx)) + ((py - qy) * (py - qy)));
-    ll sum = 0; 
+    sort(all(a)); 
+    reverse(all(a)); 
+    //cout<<a<<endl;
+    bool lleg = false;
+    ll mon = 0;
     fore(i, 0, n){
-        sum+= a[i];
+        if (a[i] <= c){
+            fore(j, 0, n){
+                a[j] = a[j] * 2;
+            }
+        }else{
+            mon++;
+        }
     }
-    if (sum>dist){
-        cout<<"Yes\n"; 
-    } else{
-        cout<<"No\n";
-    }
+    pri(mon);
 }
 
 int main(){
