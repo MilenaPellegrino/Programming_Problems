@@ -33,12 +33,13 @@ string YES = "YES\n";
 string NO = "NO\n";
 
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    string s; cin>>s; 
+    string cod = "codeforces";
+    ll res = 0; 
+    fore(i, 0, sz(s)){
+        if(s[i] != cod[i])res++;
     }
+    pri(res);
 }
 
 int main(){

@@ -34,11 +34,33 @@ string NO = "NO\n";
 
 void solve(){
     ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    vi a(n); fore(i, 0, n)cin>>a[i];
+    multiset<ll> nums; 
+    fore(i, 0, n){
+        nums.insert(a[i]);
     }
+    ll num1 = 0;
+    ll num2 = 0;
+    while(sz(nums)>=2){
+        auto it1 = nums.begin();
+        num1 = *it1; 
+        
+        nums.erase(it1);
+
+        auto it2 = nums.begin();
+        num2 = *it2;
+        
+        nums.erase(it2);
+
+
+        ll res = num1 + num2 - 1;
+        nums.insert(res);
+    }
+    ll resu = 0;
+    for(ll num : nums){
+        resu = num;
+    }
+    pri(resu);
 }
 
 int main(){

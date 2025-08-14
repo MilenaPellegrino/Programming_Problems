@@ -34,11 +34,29 @@ string NO = "NO\n";
 
 void solve(){
     ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    string s; cin>>s; 
+    ll cant0 = 0, cant1 = 0; 
+    fore(i, 0, sz(s)){
+        if(s[i] == '0'){
+            cant0++;
+        } else{
+            cant1++;
+        }
     }
+    ll res = 0;
+   fore(i, 0, sz(s)){
+        string temp = s; 
+
+        if(temp[i] == '1'){
+            temp[i] = '0';
+        }else{
+            temp[i] = '1';
+        }
+        for(char c : temp){
+            if(c=='1')res++;
+        }
+   }
+   pri(res);
 }
 
 int main(){

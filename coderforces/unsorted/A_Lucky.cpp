@@ -33,11 +33,21 @@ string YES = "YES\n";
 string NO = "NO\n";
 
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
+    string s; cin>>s; 
+    ll sum1 = 0;
+    ll sum2 = 0; 
+    fore(i, 0, 3){
+        ll num = s[i] - '0';
+        sum1 += num;
+    }
+    fore(i, 3, sz(s)){
+        ll num = s[i] - '0'; 
+        sum2 += num;
+    }
+    if (sum1 == sum2){
+        cout<<YES;
     }else{
-        pri(2);
+        cout<<NO;
     }
 }
 

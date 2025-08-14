@@ -35,20 +35,23 @@ string NO = "NO\n";
 void solve(){
     ll n; cin>>n;
     // arreglo de grados:
-    vi grad(n+2, 0); 
+    vi grad(n+1, 0); 
     ll vermax = 0;
-    vii graf(n+2);
-    fore(i, 1, n+1){
+    ll tammax = 0;
+    vii graf(n+1, {0, 0});
+    fore(i, 1, n){
         ll u, v; cin>>u>>v;
         graf[i].fst = u; 
         graf[i].snd = v;
         grad[u]++;
         grad[v]++;
-        if(grad[u] > vermax){
+        if(grad[u] > tammax){
             vermax = u;
+            tammax = grad[u];
         } 
-        if(grad[v] > vermax){
+        if(grad[v] > tammax){
             vermax = v;
+            tammax = grad[v];
         }
     }
     ll res = 0;
@@ -72,10 +75,10 @@ void solve(){
     }
     pri(res);
 
-    db(vermax);
+   // db(vermax);
     //sort(all(grad));
     //reverse(all(grad));
-    cout<<grad<<endl;
+   // cout<<grad<<endl;
 }
 
 int main(){

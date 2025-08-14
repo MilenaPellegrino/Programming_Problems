@@ -32,12 +32,53 @@ set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 string YES = "YES\n"; 
 string NO = "NO\n";
 
+bool sepuede(vi a, vi b, ll k){
+    ll sumq = 0; 
+    fore(i, 0, sz(a)){
+        if(b[i]!= -1){
+            sumq = a[i] + b[i];
+            break;
+        }
+    }
+    fore(i, 0, sz(a)){
+        ll num = 0;
+        if(b[i] != -1){
+            if(a[i] + b[i] != sumq)return false;
+        }else{
+            num = sumq - a[i];
+            if(num>k || num<0)return false;
+        }
+    }
+    return true;
+}
+
 void solve(){
     ll n; cin>>n;
-    if(n==3){
-        pri(3);
+    ll k; cin>>k; 
+    vi a(n); 
+    fore(i, 0, n)cin>>a[i];
+    vi b(n); 
+    fore(i, 0, n)cin>>b[i];
+    ll cantdif = 0;
+    fore(i, 0, n){
+        if(b[i]!= -1)cantdif++;
+    }
+    if(cantdif != 0){
+        if(sepuede(a, b, k)){
+            pri(1);
+        }else{
+            pri(0);
+        }
     }else{
-        pri(2);
+    //    ll res = k-n + 1;
+    //    pri(res+1); 
+    ll mini = 0, maxi = 1e18;
+    fore(i, 0, n){
+        mini = max(mini, a[i]);
+        maxi = min(maxi, a[i] + k);
+    }
+    ll res = max(0LL, maxi - mini + 1);
+    pri(res);
     }
 }
 

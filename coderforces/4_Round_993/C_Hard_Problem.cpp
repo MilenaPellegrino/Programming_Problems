@@ -33,12 +33,25 @@ string YES = "YES\n";
 string NO = "NO\n";
 
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    ll m, a, b, c; cin>>m>>a>>b>>c;
+    ll pos1 = m - a;
+    ll pos2 = m -b;
+    ll res = 0;
+    if(pos1 > 0){
+        res += a; 
+        ll mins = min(pos1, c);
+        res += mins; 
+        c -= mins;
+    } else if (pos1 <= 0){
+        res+= m;
     }
+    if(pos2 > 0){
+        res += b; 
+        res += min(pos2, c);
+    } else if (pos2 <= 0){
+        res+= m;
+    }
+    pri(res);
 }
 
 int main(){

@@ -34,11 +34,38 @@ string NO = "NO\n";
 
 void solve(){
     ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    
+    vvi graph(n+1);
+    fore(i, 0, n-1){
+        ll u, v; cin>>u>>v;
+        graph[u].pb(v); 
+        graph[v].pb(u);
     }
+    // //Special case 
+    // if(n==3){
+    //     pri(1);
+    //     return;
+    // }
+    vi leaves(n+1, 0);
+    ll tot = 0;
+    fore(i, 1, n+1){
+        if(sz(graph[i]) == 1){
+            leaves[i] = 1;
+            tot++;
+        }
+    }
+
+    ll res= 1e9 + 10;
+    fore(i, 1, n+1){
+        ll ady = 0;
+        for(ll v : graph[i]){
+            if(leaves[v])ady++;
+        }
+        ll act = tot - ady - leaves[i];
+        act = max(act, 0LL);
+        res = min(res, act);
+    }
+    pri(res);
 }
 
 int main(){

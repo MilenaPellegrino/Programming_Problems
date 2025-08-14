@@ -33,11 +33,15 @@ string YES = "YES\n";
 string NO = "NO\n";
 
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
+    ll l, r, d, u; cin>>l>>r>>d>>u;
+    l = abs(l); 
+    r = abs(r); 
+    d = abs(d); 
+    u = abs(u); 
+    if((l == r) && (u==d) && (l == u) && (l == d) && (r == d) && (r==u) && (d == u)){
+        cout<<YES;
     }else{
-        pri(2);
+        cout<<NO;
     }
 }
 

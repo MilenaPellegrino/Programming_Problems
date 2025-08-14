@@ -33,12 +33,13 @@ string YES = "YES\n";
 string NO = "NO\n";
 
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    ll n; cin>>n; ll x; cin>>x;
+    fore(i, 0, n){
+            if(i==x)continue;
+            cout<<i<<" ";
     }
+    if(x<n){cout<<x<<"\n"; return;}
+    cout<<"\n";
 }
 
 int main(){

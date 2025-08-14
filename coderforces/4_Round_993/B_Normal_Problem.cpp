@@ -33,12 +33,19 @@ string YES = "YES\n";
 string NO = "NO\n";
 
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    string a; cin>>a;
+    string b; 
+    fore(i, 0, sz(a)){
+        if(a[i]== 'q'){
+           b+= 'p';
+        }else if(a[i] == 'p'){
+            b+='q';
+        } else{
+            b+=a[i];
+        }
     }
+    reverse(all(b));
+    cout<<b<<"\n";
 }
 
 int main(){

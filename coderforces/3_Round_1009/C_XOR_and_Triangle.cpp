@@ -32,13 +32,28 @@ set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 string YES = "YES\n"; 
 string NO = "NO\n";
 
+bool secumple(ll x, ll y){
+    ll xxor = x ^ y; 
+    bool b1 = (x + y) > xxor;
+    bool b2 = (y + xxor) > x;
+    bool b3 = (x + xxor) > y;
+    bool b4 = y < x;
+    return b1 && b2 && b3 && b4;
+}
+
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    ll x; cin>>x;
+    ll res = 0;
+    fore(i, 0, 60){
+        fore(j, i+1, 60){
+            ll res = (1LL<<i) | (1LL<<j);
+            if(secumple(x, res)){
+                pri(res);
+                return;
+            }
+        }
     }
+    pri(-1);
 }
 
 int main(){

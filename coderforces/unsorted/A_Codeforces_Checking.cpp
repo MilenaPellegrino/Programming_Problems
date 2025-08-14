@@ -32,12 +32,20 @@ set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 string YES = "YES\n"; 
 string NO = "NO\n";
 
+string cod = "codeforces";
 void solve(){
-    ll n; cin>>n;
-    if(n==3){
-        pri(3);
+    char c; cin>>c;
+    bool res = false; 
+    fore(i, 0, sz(cod)){
+        if (cod[i] == c){
+            res = true;
+            break;
+        }
+    }
+    if(res){
+        cout<<YES;
     }else{
-        pri(2);
+        cout<<NO;
     }
 }
 

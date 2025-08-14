@@ -32,13 +32,34 @@ set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 string YES = "YES\n"; 
 string NO = "NO\n";
 
+// array gooood -> existe algun elemento que puede ser representado como la suma de todos los otros elementos
 void solve(){
     ll n; cin>>n;
-    if(n==3){
-        pri(3);
-    }else{
-        pri(2);
+    bool iscero = false;
+    vi a(n); fore(i, 0, n)cin>>a[i];
+    ll maxactu = a[0];
+    vi sumpar(n+1);
+    sumpar[0] = a[0];
+    if(a[0]==0)iscero=true;
+    if(n==1 && iscero){
+        pri(1);
+        return;
+    }else if(n==1 && !iscero){
+        pri(0);
+        return;
     }
+    fore(i, 1, n){
+        if(a[i]==0)iscero=true;
+        sumpar[i] = sumpar[i-1] + a[i];
+    }
+    ll res = 0;
+    fore(i, 0, n){
+        maxactu = max(maxactu, a[i]);
+        ll sumact = sumpar[i] - a[i]; 
+        if(maxactu == sumact)res++;
+    }
+    if(iscero)res++;
+    pri(res);
 }
 
 int main(){
