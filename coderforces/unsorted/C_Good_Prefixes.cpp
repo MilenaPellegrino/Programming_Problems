@@ -34,31 +34,23 @@ string NO = "NO\n";
 
 // array gooood -> existe algun elemento que puede ser representado como la suma de todos los otros elementos
 void solve(){
-    ll n; cin>>n;
-    bool iscero = false;
-    vi a(n); fore(i, 0, n)cin>>a[i];
-    ll maxactu = a[0];
-    vi sumpar(n+1);
-    sumpar[0] = a[0];
-    if(a[0]==0)iscero=true;
-    if(n==1 && iscero){
-        pri(1);
-        return;
-    }else if(n==1 && !iscero){
-        pri(0);
-        return;
+    ll n; cin>>n; 
+    vi a(n+1, 0); fore(i, 0, n)cin>>a[i];
+    vi sumparc(n+1); 
+    sumparc[0] = a[0];
+    fore(i, 1, n+1){
+        sumparc[i] = sumparc[i-1] + a[i];
     }
-    fore(i, 1, n){
-        if(a[i]==0)iscero=true;
-        sumpar[i] = sumpar[i-1] + a[i];
-    }
+    //cout<<sumparc<<endl;
+    
+    ll maxact = -1;
     ll res = 0;
     fore(i, 0, n){
-        maxactu = max(maxactu, a[i]);
-        ll sumact = sumpar[i] - a[i]; 
-        if(maxactu == sumact)res++;
+        maxact = max(maxact, a[i]);
+        if(sumparc[i] - maxact == maxact){
+            res++;
+        }
     }
-    if(iscero)res++;
     pri(res);
 }
 
