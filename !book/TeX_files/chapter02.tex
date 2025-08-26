@@ -93,6 +93,16 @@ Para números primos mayores, como 23, 29, etc., las reglas pueden volverse más
 	\item \textbf{Uso de Factores}: Si un número es divisible por dos o más números coprimos, entonces es divisible por su producto. Por ejemplo, si un número es divisible por 3 y por 5, entonces es divisible por 15.
 \end{enumerate}
 
+\subsection{Generación de divisores}
+Para encontrar todos los divisores de un número $k$:
+\begin{lstlisting}[language=C++, caption={Generar los divisores de un numero}]
+	for (ll i = 1; i * i <= k; i++) {
+		if (k % i == 0) {
+			divs.push_back(i);
+			if (i != k / i) divs.push_back(k / i);
+		}
+	}
+\end{lstlisting}
 
 \section{Números Primos}
 
@@ -110,5 +120,29 @@ Complejidad: \( O(\sqrt{n}) \)
 		return true;
 	}
 \end{lstlisting}
+
+\section{Permutaciones}
+
+\subsection{Computar las permutaciones}
+
+Sea un arreglo \(A = [a_1, a_2, \dots, a_n]\). Queremos generar todas las permutaciones de sus elementos.
+
+\begin{lstlisting}[language=C++, caption={Chequear si un número es primo}]
+	#include <bits/stdc++.h>
+	using namespace std;
+	
+	int main() {
+		vector<int> A = {1, 2, 3};
+		sort(A.begin(), A.end()); // ordenar antes de usar next_permutation
+		
+		do {
+			for (int x : A) cout << x << " ";
+			cout << "\n";
+		} while (next_permutation(A.begin(), A.end()));
+		
+		return 0;
+	}
+\end{lstlisting}
+
 
 
