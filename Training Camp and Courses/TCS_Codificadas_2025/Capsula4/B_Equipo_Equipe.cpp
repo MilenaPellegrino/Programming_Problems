@@ -34,18 +34,12 @@ string NO = "NO\n";
 
 void solve(){
     ll n; cin>>n;
-    ll k; cin>>k;
-    string s; cin>>s;
-    ll cant1 = 0, cant2 = 0;
-    fore(i, 0, sz(s)){
-        if(s[i]=='(' && cant1<k/2){
-            cout<<s[i];
-            cant1++;
-        }else if(s[i] == ')' && cant2<k/2){
-            cout<<s[i];
-            cant2++;
-        }
+    ll res = 0; 
+    fore(i, 0, n){
+        ll a1, a2, a3; cin>>a1>>a2>>a3; 
+        if(a1 + a2 + a3 >= 2)res++;
     }
+    pri(res);
 }
 
 int main(){

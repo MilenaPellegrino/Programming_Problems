@@ -33,25 +33,27 @@ string YES = "YES\n";
 string NO = "NO\n";
 
 void solve(){
-    ll n; cin>>n;
-    ll k; cin>>k;
-    string s; cin>>s;
-    ll cant1 = 0, cant2 = 0;
-    fore(i, 0, sz(s)){
-        if(s[i]=='(' && cant1<k/2){
-            cout<<s[i];
-            cant1++;
-        }else if(s[i] == ')' && cant2<k/2){
-            cout<<s[i];
-            cant2++;
+    vi a(4); fore(i, 0, 4)cin>>a[i]; 
+    ll a2 = a[0];
+    sort(all(a)); 
+    //ll a, b, c, d; cin>>a>>b>>c>>d;
+    reverse(all(a));
+    ll res= 0;
+    fore(i, 0, 4){
+        if(a[i] == a2){
+            break;
+        }else{
+            res++;
         }
     }
+    pri(res);
+    
 }
 
 int main(){
     FIN; 
-    int t = 1;
-    //int t; cin>>t; 
+    //int t = 1;
+    int t; cin>>t; 
     while(t--){
         solve();
     }
