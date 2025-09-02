@@ -65,6 +65,22 @@ Por ejemplo:
 	int pos = c - 'a' + 1; // pos == 2
 \end{verbatim}
 
+\subsection{Conversión entre mayúsculas y minúsculas}
+
+
+\begin{itemize}
+	\item \textbf{Convertir un carácter a mayúscula:}
+	\begin{lstlisting}[language=C++]
+		char c = 'b';
+		c = toupper(c); // c ahora es 'B'
+	\end{lstlisting}
+	
+	\item \textbf{Convertir un carácter a minúscula:}
+	\begin{lstlisting}[language=C++]
+		char c = 'G';
+		c = tolower(c); // c ahora es 'g'
+	\end{lstlisting}
+\end{itemize}
 \subsection*{Ordenar partes (subrangos) de un vector}
 
 En C++, se puede ordenar una parte de un vector (es decir, un subrango) utilizando la función \texttt{sort} de la STL, especificando iteradores de inicio y fin.
@@ -100,4 +116,18 @@ Ejemplo:
 	\item  MEX([0, 1, 3]) = 2
 \end{enumerate}
 
+\subsection{Notación BIG O}
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Tamaño del input: $N$} & \textbf{Peor complejidad aceptada} \\ \hline
+		$N \leq 22 \ (\approx 2 \cdot 10^1)$ & $O(2^N)$ \\ \hline
+		$N \leq 100 \ (10^2)$ & $O(N^3)$ \\ \hline
+		$N \leq 1000 \ (10^3)$ & $O(N^2)$ \\ \hline
+		$N \leq 1{,}000{,}000 \ (10^6)$ & $O(N \log N)$ \\ \hline
+		$N \leq 1{,}000{,}000{,}000 \ (10^9)$ & $O(N),\ O(\log N),\ O(1)$ \\ \hline
+	\end{tabular}
+	\caption{Relación entre tamaño de input y la peor complejidad aceptada.}
+\end{table}
 
