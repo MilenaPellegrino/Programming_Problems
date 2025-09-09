@@ -131,3 +131,23 @@ Ejemplo:
 	\caption{Relación entre tamaño de input y la peor complejidad aceptada.}
 \end{table}
 
+\subsection{Resize() en c++}
+La funci\'on \texttt{std::vector::resize()} ajusta el n\'umero de elementos en un vector. Su acci\'on depende del tama\~no deseado:
+
+\begin{itemize}
+	\item \textbf{Si el nuevo tama\~no es mayor que el actual:} Se a\~naden nuevos elementos al final. Opcionalmente, se puede especificar un valor de inicializaci\'on: \texttt{mi\_vector.resize(10, -1)}.
+	\item \textbf{Si el nuevo tama\~no es menor que el actual:} Se eliminan los elementos del final del vector hasta alcanzar el tama\~no especificado.
+\end{itemize}
+\begin{lstlisting}[style=mycpp, caption=Uso eficiente de resize]
+
+	int main() {
+		int n; cin>>n;
+		vector<int> numeros;
+		numeros.resize(n); // Pre-asigna memoria para n elementos
+		for (int i = 0; i < n; ++i) {
+			cin >> numeros[i]; // Acceso directo por \'indice
+		}
+		return 0;
+	}
+\end{lstlisting}
+
