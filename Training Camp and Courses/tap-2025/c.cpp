@@ -33,13 +33,44 @@
     string NO = "NO\n";
      
     void solve(){
-        
+int N;
+    if (!(cin >> N)) return;
+
+    vector<int> P(N);
+    for (int i = 0; i < N; i++) {
+        cin >> P[i];
+        P[i]--; // 0-indexed
+    }
+
+    // El resultado es la suma de s(rot^k(P)) para todo k.
+    // s(P) es la cantidad de x tales que P[P[x]] = x.
+    // Esto es equivalente a sumar 1 por cada (k, x) tal que P_k[P_k[x]] = x.
+    
+    // Sea i el indice original y val = P[i].
+    // En la rotacion k, el valor val esta en la posicion (i-k mod N).
+    // Sea pos_k(i) = (i-k) mod N.
+    // La condicion es: P_k[ pos_k(i) ] = pos_k(j)  => pos_k(P[i]) = pos_k(j) 
+    // y P_k[ pos_k(j) ] = pos_k(i).
+    
+    // Al final, la suma total es simplemente:
+    // N * (cantidad de i tales que P[P[i]] == i)
+    
+    ll total_sum = 0;
+    for (int i = 0; i < N; i++) {
+        if (P[P[i]] == i) {
+            total_sum += 1;
+        }
+    }
+    
+    // Pero el problema dice que es la suma de TODAS las rotaciones.
+    // Si P[P[i]] == i, ese i contribuye con 1 en CADA una de las N rotaciones.
+    cout << total_sum * N << endl;
     }
      
     int main(){
         FIN; 
-        //int t = 1;
-        int t; cin>>t; 
+        int t = 1;
+        //int t; cin>>t; 
         while(t--){
             solve();
         }
