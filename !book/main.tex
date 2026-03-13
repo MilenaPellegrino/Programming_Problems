@@ -1,12 +1,13 @@
 \documentclass[a4paper,12pt]{book}
 \usepackage{graphicx}
 
+
 % Para tildes, enies y cosas raras de utf8
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 
 \usepackage{pgfpages}
-\pgfpagesuselayout{2 on 1}[a4paper, landscape] % Horizontal
+%\pgfpagesuselayout{2 on 1}[a4paper, landscape] % Horizontal
 
 \setcounter{tocdepth}{3}
 
@@ -23,9 +24,16 @@
 \usepackage{tikz}
 \usepackage{hyperref}
 
+
+
 \usetikzlibrary{graphs,graphs.standard}
 
 \geometry{a4paper, margin=2.5cm}
+\hypersetup{
+	pdftitle={Notas de Programación Competitiva},
+	pdfauthor={Milena Pellegrino},
+	pdfstartview={FitH}
+}
 
 % --- Definiciones de colores y estilos ---
 \definecolor{codegray}{gray}{0.85}
@@ -171,12 +179,12 @@
 \tableofcontents
 
 \mainmatter
-\include{./TeX_files/chapter01}  % Introducción
+\include{./TeX_files/1-Introduccion}  % Introducción
 \include{./TeX_files/2-lib-estandar}  % LIbreria estandar
-\include{./TeX_files/chapter02}  % Matemáticas
-\include{./TeX_files/chapter03}  % Sortings
-\include{./TeX_files/4-prog-dinam} % Programacion dinamica 
-\include{./TeX_files/05-grafos} % Programacion dinamica 
+\include{./TeX_files/3-Busquedas}  % Matemáticas
+\include{./TeX_files/4-Matematica}  % Sortings
+\include{./TeX_files/5-prog-dinam} % Programacion dinamica 
+\include{./TeX_files/6-grafos} % Programacion dinamica 
 
 \backmatter
 % bibliography, glossary and index would go here.
