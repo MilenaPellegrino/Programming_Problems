@@ -42,7 +42,7 @@ pair<ll, string> steps(string s, string a) {
         }
     }
 
-    return {cont, s};
+    return {cont, a};
 }
 
 
@@ -78,10 +78,12 @@ int main(){
             pair<ll, string> stepsaux = steps(scons, a);
             if(ans.fst <= stepsaux.fst){
                 ans.fst = stepsaux.fst;
-                ans.snd = stepsaux.snd;
+                // ans.snd = stepsaux.snd;
+                ans.snd = scons;
             }
             // cout<<apermu<<" -> "<<scons<<endl;
         } while (next_permutation(apermu.begin(), apermu.end()));
+        transform(all(ans.snd), (ans.snd).begin(), ::toupper);
         cout<<ans.snd<<"\n";
     }
         
