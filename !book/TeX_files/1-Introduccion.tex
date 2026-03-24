@@ -4,7 +4,14 @@
 Estas notas explican recordatorios y cosas basicas en programación competitiva. 
 Fueron escritas con la idea de usarla como notebook en competencias. 
 
+
+
 \section{Cosas de C++}
+
+\subsection{Tamaño de los tipos de datos}
+\begin{itemize}
+	\item \textbf{Tamaño de un long long}: Es un número de 64 bits, \( 2^{64} \) o aproximadamente \( 10^{19} \).
+\end{itemize}
 
 \subsection{Lectura de líneas con espacios en C++}
 
@@ -28,15 +35,11 @@ entonces \texttt{getline()} puede leer una línea vacía. Para evitarlo, se debe
 
 
 
-\begin{verbatim}
+\begin{lstlisting}[language=C++]
 	cin.ignore();
-\end{verbatim}
+\end{lstlisting}
 
 
-\subsection{Tamaño de los tipos de datos}
-\begin{itemize}
-	\item \textbf{Tamaño de un long long}: Es un número de 64 bits, \( 2^{64} \) o aproximadamente \( 10^{19} \).
-\end{itemize}
 
 \subsection{Conversiones }
 
@@ -99,40 +102,60 @@ Ejemplos:
 	\end{lstlisting}
 \end{itemize}
 
+\subsubsection{Conversiones a binarias y visceversas}
+
+\paragraph{Convertir número a string binario:}
+Para convertir un número entero a su representación binaria en forma de string, se puede usar la función:
+
+\begin{lstlisting}[language=C++]
+	
+	ll num = 13;
+	string binary = bitset<64>(num).to_string(); // "0000...1101"
+	
+	// O sin ceros a la izquierda:
+	binary = bitset<64>(num).to_string();
+	binary.erase(0, binary.find('1')); // remueve ceros iniciales
+\end{lstlisting}
+
+\paragraph{Convertir string binario a número:}
+Para convertir un string que representa un número binario a su valor decimal, se usa \texttt{stoll()} con base 2:
+
+\begin{lstlisting}[language=C++]
+	string binary = "1101";
+	ll num = stoll(binary, nullptr, 2); // num == 13
+	
+	// Otros ejemplos:
+	ll a = stoll("0101", nullptr, 2);  // a == 5
+	ll b = stoll("11111111", nullptr, 2); // b == 255
+\end{lstlisting}
+
+\textbf{Nota:} El parámetro \texttt{nullptr} indica que no se necesita guardar la posición del primer carácter no convertido, y el \texttt{2} especifica que se usa base binaria.
+
 \subsection*{Ordenar partes (subrangos) de un vector}
 
 En C++, se puede ordenar una parte de un vector (es decir, un subrango) utilizando la función \texttt{sort} de la STL, especificando iteradores de inicio y fin.
 
 Esto es especialmente útil cuando se necesita dividir un conjunto en mitades o grupos, por ejemplo, para aplicar diferentes criterios de ordenamiento en cada parte.
 
-\begin{verbatim}
+\begin{lstlisting}[language=C++]
 	// Supongamos que tenemos un vector de arreglos de 3 enteros:
 	vector<array<ll, 3>> v(n);
 	
-	// Ordenamos sólo la primera mitad del vector por el segundo campo (índice 1):
+	// Ordenamos solo la primera mitad del vector por el segundo campo (indice 1):
 	sort(v.begin(), v.begin() + n/2, [](const array<ll, 3> &a, const array<ll, 3> &b) {
 		return a[1] < b[1];
 	});
 	
-	// Ordenamos la segunda mitad también por el segundo campo:
+	// Ordenamos la segunda mitad tambien por el segundo campo:
 	sort(v.begin() + n/2, v.end(), [](const array<ll, 3> &a, const array<ll, 3> &b) {
 		return a[1] < b[1];
 	});
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Aplicación:} esta técnica aparece frecuentemente en problemas donde hay que emparejar elementos de dos mitades, o donde diferentes partes del conjunto deben ser tratadas con diferentes estrategias.
 
 \section{Cosas comunes en programación competitiva}
-\subsection{MEX}
-En muchos problemas se suele hablar sobre MEX \\
-MEX es el acrónimo de Minimum EXcluded, se refiere al menor número natural en un arreglo (empezando de 0) que no está en el. \\
-Ejemplo: 
 
-\begin{enumerate}
-	\item MEX([0, 1, 2]) = 3
-	\item  MEX([1, 2, 3]) = 0
-	\item  MEX([0, 1, 3]) = 2
-\end{enumerate}
 
 \subsection{Notación BIG O}
 \begin{table}[h!]
