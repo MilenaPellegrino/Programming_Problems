@@ -7,6 +7,7 @@ using namespace std;
 #define pb push_back 
 #define fst first
 #define snd second 
+#define sz(x) ((int)x.size())
 
 #define FIN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0)
 
