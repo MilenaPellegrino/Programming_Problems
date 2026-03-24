@@ -38,34 +38,51 @@ entonces \texttt{getline()} puede leer una línea vacía. Para evitarlo, se debe
 	\item \textbf{Tamaño de un long long}: Es un número de 64 bits, \( 2^{64} \) o aproximadamente \( 10^{19} \).
 \end{itemize}
 
-\subsection{Convertir String a Numero y Otras Conversiones}
+\subsection{Conversiones }
+
+\subsubsection{String a Numero y de Numero a String }
 \begin{itemize}
 	\item \textbf{De string a int}: \texttt{int x = stoi("123");}
 	\item \textbf{De string a long long}: \texttt{ll y = stoll("9876543210");} 
 	\item \textbf{De numero a string}: \texttt{string s = to\_string(x);}
 \end{itemize}
 
-\begin{itemize}
-	\item Si el \texttt{char} representa un dígito (por ejemplo, \texttt{'0'} a \texttt{'9'}), se puede obtener el valor numérico restando el carácter \texttt{'0'}:
-	\begin{itemize}
-		\item \texttt{ll x = s[0] - '0';} \hfill // convierte el primer carácter del string \texttt{s} a número
-	\end{itemize}
+\subsubsection{Conversiones de char a número posicionales }
 
-\end{itemize}
-\subsubsection{Char a num, $a \to $1, $b \to $2, $c \to $3}
-Dado un carácter en minúscula \( c \in \{a, b, \dots, z\} \), se puede obtener su posición en el alfabeto con la fórmula:
+\paragraph{De char numeral a número:}
+Si el \texttt{char} representa un dígito (por ejemplo, \texttt{'0'} a \texttt{'9'}), se puede obtener el valor numérico restando el carácter \texttt{'0'}:
+
+\begin{lstlisting}[language=C++]
+	ll x = s[0] - '0'; // convierte '0' a 0, '5' a 5, etc.
+\end{lstlisting}
+
+\paragraph{De char minúscula a número ($a \to 1$, $b \to 2$, $c \to 3$, ...):}
+Dado un carácter en minúscula \( c \in \{a, b, \dots, z\} \), se puede obtener su posición en el alfabeto con:
 
 \[
-\text{valor}(c) = \text{ord}(c) - \text{ord}('a') + 1
+\text{posición}(c) = c - 'a' + 1
 \]
 
-Por ejemplo:
-\begin{verbatim}
-	char c = 'b';
-	int pos = c - 'a' + 1; // pos == 2
-\end{verbatim}
+Ejemplos:
+\begin{lstlisting}[language=C++]
+	int pos_b = 'b' - 'a' + 1; // pos_b == 2
+	int pos_z = 'z' - 'a' + 1; // pos_z == 26
+\end{lstlisting}
 
-\subsection{Conversión entre mayúsculas y minúsculas}
+\paragraph{De char mayúscula a número ($A \to 1$, $B \to 2$, $C \to 3$, ...):}
+Para caracteres en mayúscula \( C \in \{A, B, \dots, Z\} \), se usa la misma lógica:
+
+\[
+\text{posición}(C) = C - 'A' + 1
+\]
+
+Ejemplos:
+\begin{lstlisting}[language=C++]
+	int pos_B = 'B' - 'A' + 1; // pos_B == 2
+	int pos_Z = 'Z' - 'A' + 1; // pos_Z == 26
+\end{lstlisting}
+
+\subsubsection{De mayuscula a minuscula y visceversa}
 
 
 \begin{itemize}
@@ -81,6 +98,7 @@ Por ejemplo:
 		c = tolower(c); // c ahora es 'g'
 	\end{lstlisting}
 \end{itemize}
+
 \subsection*{Ordenar partes (subrangos) de un vector}
 
 En C++, se puede ordenar una parte de un vector (es decir, un subrango) utilizando la función \texttt{sort} de la STL, especificando iteradores de inicio y fin.
