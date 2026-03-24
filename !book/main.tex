@@ -43,11 +43,12 @@
 \definecolor{codeblue}{rgb}{0.2,0.2,0.7}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{backcolor}{rgb}{0.95,0.95,0.95}
+\definecolor{darkcomment}{rgb}{0.2,0.5,0.2}
 
 % Tu estilo original
 \lstdefinestyle{cppstyle}{
 	backgroundcolor=\color{backcolor},
-	commentstyle=\color{codegreen}\ttfamily,
+	commentstyle=\color{darkcomment}\ttfamily,
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codeblue},
@@ -73,7 +74,7 @@
 
 \lstdefinestyle{mycpp}{
 	backgroundcolor=\color{backcolor},
-	commentstyle=\color{codegray},
+	commentstyle=\color{darkcomment},
 	keywordstyle=\color{blue},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
@@ -94,10 +95,10 @@
 
 % Tu estilo global
 \lstset{
-	backgroundcolor=\color{codegray},
+	backgroundcolor=\color{backcolor},
 	basicstyle=\ttfamily\small,
 	keywordstyle=\color{blue},
-	commentstyle=\color{gray},
+	commentstyle=\color{darkcomment},
 	stringstyle=\color{red},
 	numbers=none,
 	numberstyle=\tiny,
@@ -192,6 +193,8 @@
 \include{./TeX_files/6-grafos} % Grafos
 \include{./TeX_files/7-String} % Strings
 \include{./TeX_files/8-Est-datos} % Estructuras de datos 
+
+% - TRiangulos 
 
 \backmatter
 % bibliography, glossary and index would go here.

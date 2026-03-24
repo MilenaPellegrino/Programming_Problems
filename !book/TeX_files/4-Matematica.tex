@@ -4,8 +4,8 @@
 
 \subsection{Obtener $\pi$}
 \begin{lstlisting}[language=C++, caption={Obtener $\pi$}]
-	const double PI = 3.141592653589793;  FORMA 1
-	double pi = M_PI; 	 FORMA 2
+	const double PI = 3.141592653589793;  //FORMA 1
+	double pi = M_PI; 	 //FORMA 2
 	
 \end{lstlisting}
 
@@ -16,10 +16,10 @@ Para calcular la raíz cuadrada de un número en C++, se utiliza la función \te
 
 \textbf{Ejemplo:}
 
-\begin{verbatim}
-		double x = 25.0;
-		double raiz = sqrt(x);
-\end{verbatim}
+\begin{lstlisting}[language=C++]
+	double x = 25.0;
+	double raiz = sqrt(x);
+\end{lstlisting}
 
 \bigskip
 
@@ -211,5 +211,67 @@ Sea un arreglo \(A = [a_1, a_2, \dots, a_n]\). Queremos generar todas las permut
 	}
 \end{lstlisting}
 
+\section{Geometría}
+
+\subsection{Distancia entre dos puntos}
+Dados dos puntos \((x_1, y_1)\) y \((x_2, y_2)\), la distancia euclidiana es:
+
+\[
+d = \sqrt{(x_1-x_2)^2 + (y_1-y_2)^2}
+\]
+
+En programación competitiva, muchas veces conviene usar la distancia al cuadrado (para evitar \texttt{sqrt}):
+
+\[
+d^2 = (x_1-x_2)^2 + (y_1-y_2)^2
+\]
+
+\begin{lstlisting}[language=C++, caption={Distancia al cuadrado entre dos puntos}]
+	ll dist2 = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+\end{lstlisting}
+
+\subsection{Triángulos}
+Un triángulo queda determinado si conocés:
+\begin{itemize}
+	\item 3 lados (SSS)
+	\item 2 lados + 1 ángulo (SAS)
+	\item 2 ángulos + 1 lado (ASA / AAS)
+\end{itemize}
+
+\subsubsection{Ley de Cosenos}
+Se usa cuando tenés lados y querés ángulos, o viceversa:
+
+\[
+c^2 = a^2 + b^2 - 2ab\cos(C)
+\]
+
+\textbf{Sirve para:}
+\begin{itemize}
+	\item SSS \(\to\) sacar ángulos
+	\item SAS \(\to\) sacar el lado faltante
+\end{itemize}
+
+\textbf{Ejemplo (CP):}
+\begin{lstlisting}[language=C++, caption={Ley de Cosenos: obtener un ángulo}]
+	double C = acos((a * a + b * b - c * c) / (2.0 * a * b));
+\end{lstlisting}
+
+\subsubsection{Ley de Senos}
+Cuando tenés ángulos y lados mezclados:
+
+\[
+\frac{\sin(A)}{a} = \frac{\sin(B)}{b} = \frac{\sin(C)}{c}
+\]
+
+\textbf{Sirve para:}
+\begin{itemize}
+	\item ASA / AAS \(\to\) sacar lados
+	\item completar triángulos
+\end{itemize}
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=C++, caption={Ley de Senos: obtener un lado}]
+	double b = a * sin(B) / sin(A);
+\end{lstlisting}
 
 
