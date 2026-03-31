@@ -219,30 +219,35 @@
 	vector<int> G[MAXN];
 	bool vis[MAXN];
 	
-	bool hasCycleUndirected(int u, int parent) {
+	bool hasCycle(int u, int parent) {
 		vis[u] = true;
 		for (int v : G[u]) {
 			if (!vis[v]) {
-				if (hasCycleUndirected(v, u)) 
-				return true;
+				if (hasCycle(v, u)) 
+					return true;
 			}
 			else if (v != parent) 
-			return true;
+				return true;
 		}
 		return false;
 	}
 	
-	bool tieneCicloNoDirigido(int n) {
-		fill(vis, vis + n, false);
+	bool hasCycleAll(int n) {
+		memset(vis, 0, sizeof(vis));
 		for (int i = 0; i < n; ++i) {
-			if (!vis[i] && hasCycleUndirected(i, -1))
-			return true;
+			if (!vis[i]) {
+				if (hasCycle(i, -1)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
 \end{lstlisting}
 
 \section{Detectar ciclos en grafo dirigido}
+
+Inicialmente, todos los nodos están en blanco (0), lo que significa que no fueron visitados. Cuando empezamos a explorar un nodo, lo marcamos como gris (1), indicando que está en proceso dentro de la recursión. Luego recorremos sus vecinos: si encontramos uno blanco, seguimos el DFS; pero si encontramos un nodo gris, significa que volvimos a un nodo que todavía está en la pila de recursión, lo que implica la existencia de un ciclo (una arista de retroceso o back edge). Finalmente, cuando terminamos de procesar un nodo, lo marcamos como negro (2), indicando que ya fue completamente explorado. Para asegurarnos de detectar ciclos en todo el grafo, este proceso se inicia desde cada nodo no visitado. La función \texttt{hasCycleAll()} es la que se usaría en el \texttt{main} para verificar que tu grafo tiene un ciclo.
 
 \begin{enumerate}
 	\item Usar DFS con colores (0: no visitado, 1: en proceso, 2: visitado)
@@ -253,27 +258,30 @@
 
 \begin{lstlisting}[caption=Detectar ciclos en grafo dirigido]
 	vector<int> G[MAXN];
-	int color[MAXN]; // 0: blanco (no visitado), 1: gris (en proceso), 2: negro (visitado)
+	// 0: blanco (no visitado)
+	// 1: gris (en proceso)
+	// 2: negro (visitado)
+	int color[MAXN]; 
 	
 	bool hasCycleDirected(int u) {
 		color[u] = 1; // gris
 		for (int v : G[u]) {
 			if (color[v] == 0) {
 				if (hasCycleDirected(v)) 
-				return true;
+					return true;
 			} 
 			else if (color[v] == 1) 
-			return true;
+				return true;
 		}
 		color[u] = 2; // negro
 		return false;
 	}
 	
-	bool tieneCicloDirigido(int n) {
+	bool hasCycleAll(int n) {
 		fill(color, color + n, 0);
 		for (int i = 0; i < n; ++i) {
 			if (color[i] == 0 && hasCycleDirected(i))
-			return true;
+				return true;
 		}
 		return false;
 	}
