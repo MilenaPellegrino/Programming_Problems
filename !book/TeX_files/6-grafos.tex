@@ -455,6 +455,64 @@ Inicialmente, todos los nodos están en blanco (0), lo que significa que no fuer
 	}
 \end{lstlisting}
 
+\section{Reconstrucción de Caminos (BFS)}
+
+Cuando necesitas no solo la distancia mínima, sino la secuencia de nodos, se utiliza un arreglo de predecesores (o padres).
+
+\subsection*{1. Concepto Clave: El arreglo parent}
+
+\begin{itemize}
+	\item \texttt{parent[v] = u}: Significa que llegamos al nodo \texttt{v} desde el nodo \texttt{u}.
+	\item Inicializamos todo el arreglo en -1 (o un valor nulo) para identificar el origen y los nodos no visitados.
+\end{itemize}
+
+\subsection*{2. Implementación del BFS}
+
+\begin{lstlisting}[caption=BFS con arreglo parent]
+// n = número de nodos, start = nodo inicial
+vector<int> parent(n + 1, -1);
+vector<int> dist(n + 1, -1);
+queue<int> q;
+
+q.push(start);
+dist[start] = 0;
+
+while(!q.empty()){
+	int u = q.front(); q.pop();
+	
+	for(int v : G[u]){
+		if(dist[v] == -1){ // Si no ha sido visitado
+			dist[v] = dist[u] + 1;
+			parent[v] = u; // REGISTRO: u es el padre de v
+			q.push(v);
+		}
+	}
+}
+\end{lstlisting}
+
+\subsection*{3. Función para recuperar el camino}
+
+Una vez termina el BFS, el camino está encadenado desde el destino hacia atrás. Debes seguir los punteros hasta llegar al origen y luego invertir la lista.
+
+\begin{lstlisting}[caption=Función para reconstruir el camino]
+vector<int> getPath(int start, int end, const vector<int>& parent) {
+	vector<int> path;
+	
+	// Si el destino no tiene padre y no es el inicio, no hay camino
+	if (parent[end] == -1 && start != end) return {};
+
+	// Retrocedemos desde 'end' hasta 'start'
+	for (int v = end; v != -1; v = parent[v]) {
+		path.push_back(v);
+	}
+	
+	// El camino está [destino, ..., origen], lo invertimos
+	reverse(path.begin(), path.end());
+	
+	return path;
+}
+\end{lstlisting}
+
 \section{Consejos}
 
 \begin{itemize}
