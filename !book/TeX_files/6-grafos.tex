@@ -469,7 +469,7 @@ Cuando necesitas no solo la distancia mínima, sino la secuencia de nodos, se ut
 \subsection*{2. Implementación del BFS}
 
 \begin{lstlisting}[caption=BFS con arreglo parent]
-// n = número de nodos, start = nodo inicial
+// n = numero de nodos, start = nodo inicial
 vector<int> parent(n + 1, -1);
 vector<int> dist(n + 1, -1);
 queue<int> q;
@@ -506,7 +506,7 @@ vector<int> getPath(int start, int end, const vector<int>& parent) {
 		path.push_back(v);
 	}
 	
-	// El camino está [destino, ..., origen], lo invertimos
+	// El camino esta [destino, ..., origen], lo invertimos
 	reverse(path.begin(), path.end());
 	
 	return path;
