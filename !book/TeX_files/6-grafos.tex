@@ -513,12 +513,62 @@ vector<int> getPath(int start, int end, const vector<int>& parent) {
 }
 \end{lstlisting}
 
-\section{Consejos}
+\section{Orden Topológico}
 
-\begin{itemize}
-	\item Usá listas de adyacencia para eficiencia en espacio.
-	\item Siempre inicializá `vis[]` y `dist[]` antes de usarlos.
-	\item Para grafos dirigidos, no agregues `v → u` si no se especifica.
-	\item En competencias, muchos problemas de grafos se reducen a BFS/DFS/Dijkstra.
-	\item Si el grafo tiene pesos negativos, ¡no uses Dijkstra!
-\end{itemize}
+Se te proporciona un grafo dirigido con $n$ vértices y $m$ aristas. Tienes que encontrar un orden de los vértices, de modo que cada arista vaya desde el vértice con un índice menor hasta un vértice con un índice mayor.
+
+En otras palabras, se trata de encontrar una permutación de los vértices (orden topológico) que corresponda al orden definido por todas las aristas del grafo. Un orden topológico puede no existir en absoluto. Solo existe si el grafo dirigido no contiene ciclos (DAG).
+
+\subsection*{Ejemplo de uso}
+
+Un problema común en el que se produce la ordenación topológica es el siguiente. Hay $n$ variables con valores desconocidos. Para algunas variables, sabemos que una de ellas es menor que la otra. Debes comprobar si estas restricciones son contradictorias y, si no lo son, mostrar las variables en orden ascendente (si hay varias respuestas posibles, mostrar cualquiera de ellas). Es fácil notar que este es exactamente el problema de encontrar el orden topológico de un grafo con $n$ vértices.
+
+\subsection*{¿Cómo funciona con DFS?}
+
+Supongamos que el grafo es acíclico. ¿Qué hace la búsqueda en profundidad (DFS)?
+
+Al comenzar desde algún vértice $v$, DFS intenta recorrer a lo largo de todas las aristas que salen de $v$. Se detiene en los bordes cuyos extremos ya han sido visitados previamente, y recorre el resto de los bordes y continúa recursivamente en sus extremos.
+
+Por lo tanto, en el momento en que la llamada a la función $\text{dfs}(v)$ ha terminado, todos los vértices que son alcanzables desde $v$ han sido visitados por la búsqueda, ya sea directamente (a través de una arista) o indirectamente.
+
+Añadamos el vértice $v$ a una lista cuando terminemos $\text{dfs}(v)$. Como todos los vértices alcanzables ya han sido visitados, ya estarán en la lista cuando agreguemos $v$. Hagamos esto para cada vértice del grafo, con una o varias búsquedas en profundidad. Para cada arista dirigida $v \rightarrow u$ en el gráfico, $u$ aparecerá antes en esta lista que $v$, porque $u$ es accesible desde $v$. 
+
+Entonces, si simplemente etiquetamos los vértices en esta lista con $n-1, n-2, \dots, 1, 0$, hemos encontrado un orden topológico del grafo. En otras palabras, la lista representa el orden topológico inverso, por lo que basta con invertir el arreglo al final.
+
+\subsection*{Código en C++}
+
+Aquí se presenta una implementación que asume que el grafo es acíclico, es decir, que existe el orden topológico deseado:
+
+\begin{lstlisting}[caption=Orden Topológico con DFS]
+// n = numero de vertices
+int n; 
+vector<vector<int>> adj; 
+vector<bool> visited;
+vector<int> ans;
+
+void dfs(int v) {
+        visited[v] = true;
+        for (int u : adj[v]) {
+                if (!visited[u]) {
+                        dfs(u);
+                }
+        }
+        ans.push_back(v);
+}
+
+void topological_sort() {
+        visited.assign(n, false);
+        ans.clear();
+        for (int i = 0; i < n; ++i) {
+                if (!visited[i]) {
+                        dfs(i);
+                }
+        }
+        reverse(ans.begin(), ans.end());
+}
+\end{lstlisting}
+
+La función principal de la solución es \texttt{topological\_sort}, que inicializa las variables DFS, lanza DFS y recibe la respuesta en el vector \texttt{ans}. 
+
+Vale la pena señalar que cuando el grafo \textbf{no} es acíclico, el resultado de \texttt{topological\_sort} aún sería algo significativo en el sentido de que si un vértice $u$ es alcanzable desde el vértice $v$, pero no al revés, el vértice $v$ siempre aparecerá primero en el array resultante.
+
