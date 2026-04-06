@@ -1,12 +1,14 @@
 \documentclass[a4paper,12pt]{book}
 \usepackage{graphicx}
 
+
 % Para tildes, enies y cosas raras de utf8
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
 
 \usepackage{pgfpages}
-\pgfpagesuselayout{2 on 1}[a4paper, landscape] % Horizontal
+%\pgfpagesuselayout{2 on 1}[a4paper, landscape] % Horizontal
 
 \setcounter{tocdepth}{3}
 
@@ -21,32 +23,46 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{hyperref}
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+
+
 \usetikzlibrary{graphs,graphs.standard}
 
 \geometry{a4paper, margin=2.5cm}
+\hypersetup{
+	pdftitle={Notas de Programación Competitiva},
+	pdfauthor={Milena Pellegrino},
+	pdfstartview={FitH}
+}
 
 % --- Definiciones de colores y estilos ---
 \definecolor{codegray}{gray}{0.85}
 \definecolor{codeblue}{rgb}{0.2,0.2,0.7}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{backcolor}{rgb}{0.95,0.95,0.95}
+\definecolor{darkcomment}{rgb}{0.2,0.5,0.2}
 
 % Tu estilo original
 \lstdefinestyle{cppstyle}{
 	backgroundcolor=\color{backcolor},
-	commentstyle=\color{codegreen}\ttfamily,
+	commentstyle=\color{darkcomment}\ttfamily,
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codeblue},
 	basicstyle=\ttfamily\footnotesize,
-	breaklines=true,
+	breaklines=false,
 	captionpos=b,
 	keepspaces=true,
-	numbers=left,
+	numbers=none,
 	numbersep=5pt,
 	showspaces=false,
 	showstringspaces=false,
 	showtabs=false,
+	columns=fixed,
+	upquote=true,
 	tabsize=4,
 	language=C++
 }
@@ -58,36 +74,42 @@
 
 \lstdefinestyle{mycpp}{
 	backgroundcolor=\color{backcolor},
-	commentstyle=\color{codegray},
+	commentstyle=\color{darkcomment},
 	keywordstyle=\color{blue},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
 	breakatwhitespace=false,
-	breaklines=true,
+	breaklines=false,
 	captionpos=b,
 	keepspaces=true,
-	numbers=left,
+	numbers=none,
 	numbersep=5pt,
 	showspaces=false,
 	showstringspaces=false,
 	showtabs=false,
+	columns=fixed,
+	upquote=true,
 	tabsize=2,
 	morekeywords={std, vector, int, double, main, cin, cout, push_back, resize},
 }
 
 % Tu estilo global
 \lstset{
-	backgroundcolor=\color{codegray},
+	backgroundcolor=\color{backcolor},
 	basicstyle=\ttfamily\small,
 	keywordstyle=\color{blue},
-	commentstyle=\color{gray},
+	commentstyle=\color{darkcomment},
 	stringstyle=\color{red},
-	numbers=left,
+	numbers=none,
 	numberstyle=\tiny,
 	numbersep=5pt,
 	frame=single,
-	breaklines=true,
-	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	breaklines=false,
+	columns=fixed,
+	keepspaces=true,
+	showtabs=false,
+	tabsize=4,
+	upquote=true,
 	showstringspaces=false,
 	captionpos=b,
 	language=C++,
@@ -137,19 +159,13 @@
 	
 	#define FIN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0); 
 	
-	typedef vector<ll> vi;
-	using ll = long long;
 	
-	void solve(){
-		
-	}
+	using ll = long long;
+	typedef vector<ll> vi;
 	
 	int main(){
 		FIN; 
-		int t = 1;
-		while(t--){
-			solve();
-		}
+
 		return 0;
 	}
 \end{lstlisting}
@@ -169,12 +185,17 @@
 \tableofcontents
 
 \mainmatter
-\include{./TeX_files/chapter01}  % Introducción
-\include{./TeX_files/2-lib-estandar}  % LIbreria estandar
-\include{./TeX_files/chapter02}  % Matemáticas
-\include{./TeX_files/chapter03}  % Sortings
-\include{./TeX_files/4-prog-dinam} % Programacion dinamica 
-\include{./TeX_files/05-grafos} % Programacion dinamica 
+\include{./TeX_files/1-Introduccion}
+\include{./TeX_files/2-lib-estandar}
+\include{./TeX_files/3-Busquedas}
+\include{./TeX_files/4-Matematica}
+\include{./TeX_files/5-prog-dinam}
+\include{./TeX_files/6-grafos}
+\include{./TeX_files/7-String}
+\include{./TeX_files/8-Est-datos} % Estructuras de datos 
+\include{./TeX_files/9-Arrays-Subarrays} % Estructuras de datos 
+
+% - TRiangulos 
 
 \backmatter
 % bibliography, glossary and index would go here.

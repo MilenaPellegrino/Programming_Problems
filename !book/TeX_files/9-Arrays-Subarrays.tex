@@ -1,0 +1,77 @@
+\chapter{Arrays / Subarrays}
+
+
+\section{Kadane}
+Kadane es un algoritmo para encontrar el subarreglo contiguo con mejor suma en tiempo lineal.
+
+\textbf{¿Qué hace?}
+Recorre el arreglo una sola vez y mantiene:
+\begin{itemize}
+\item \texttt{cur}: la mejor suma que termina en la posición actual
+\item \texttt{best}: la mejor suma global encontrada hasta el momento
+\end{itemize}
+
+Para cada elemento \texttt{x}, decide entre:
+\begin{itemize}
+\item empezar un subarreglo nuevo en \texttt{x}
+\item extender el subarreglo anterior (\texttt{cur + x})
+\end{itemize}
+
+\begin{lstlisting}[style=cppstyle, caption={Kadane para subarreglo de suma maxima}]
+long long kadane_max(const vector<long long>& arr) {
+	long long cur = arr[0], best = arr[0];
+	for (int i = 1; i < (int)arr.size(); ++i) {
+		cur = max(arr[i], cur + arr[i]);
+		best = max(best, cur);
+	}
+	return best;
+}
+\end{lstlisting}
+
+\textbf{Cómo usarlo para buscar el mínimo}
+La idea es la misma, pero reemplazando \texttt{max} por \texttt{min}.
+
+\textbf{Complejidad}
+Tanto \texttt{kadane\_max} como \texttt{kadane\_min} tienen:
+\begin{itemize}
+\item \textbf{Tiempo}: $O(n)$
+\item \textbf{Memoria extra}: $O(1)$
+\end{itemize}
+
+\subsection{Kadane con restricción (el subarreglo debe incluir \texttt{k})}
+Si queremos la suma máxima de un subarreglo contiguo que \textbf{obligatoriamente} contenga la posición \texttt{k}, podemos precomputar:
+\begin{itemize}
+\item \texttt{left[i]}: mejor suma de un subarreglo que termina en \texttt{i}
+\item \texttt{right[i]}: mejor suma de un subarreglo que empieza en \texttt{i}
+\end{itemize}
+
+Entonces, la mejor respuesta que incluye \texttt{k} es:
+\[
+\texttt{left[k] + right[k] - a[k]}
+\]
+
+\begin{lstlisting}[style=cppstyle, caption={Kadane maximo forzando incluir la posicion k (0-based)}]
+long long kadane_con_k_max(const vector<long long>& a, int k) {
+	int n = (int)a.size();
+	vector<long long> left(n), right(n);
+
+	left[0] = a[0];
+	for (int i = 1; i < n; i++) {
+		left[i] = max(a[i], left[i - 1] + a[i]);
+	}
+
+	right[n - 1] = a[n - 1];
+	for (int i = n - 2; i >= 0; i--) {
+		right[i] = max(a[i], right[i + 1] + a[i]);
+	}
+
+	return left[k] + right[k] - a[k];
+}
+\end{lstlisting}
+
+\textbf{Complejidad de esta variante}
+\begin{itemize}
+\item \textbf{Tiempo}: $O(n)$
+\item \textbf{Memoria extra}: $O(n)$ por los arreglos \texttt{left} y \texttt{right}
+\end{itemize}
+

@@ -1,0 +1,52 @@
+\chapter{Estructuras de Datos}
+
+\section{Union Find / Disjoint Set Union (DSU)}
+
+El \textbf{Union-Find}  es una estructura de datos que permite mantener un conjunto de elementos particionados en subconjuntos disjuntos. Es muy eficiente para operaciones de conectividad, ya que nos dice si dos elementos pertenecen al mismo grupo y nos permite unirlos. Se basa en dos operaciones principales:
+\begin{itemize}
+    \item \texttt{find(x)}: Sirve para saber a qué conjunto pertenece el elemento $x$. Devuelve el "representante" (o raíz) de ese conjunto.
+    \item \texttt{unite(a, b)} o \texttt{union(a, b)}: Une los conjuntos a los que pertenecen $a$ y $b$.
+\end{itemize}
+
+\textbf{Uso en grillas 2D} \\
+El Union-Find está diseñado para trabajar con estructuras en una sola dimensión (1D), es decir, maneja elementos como si fueran posiciones en un arreglo lineal ($0, 1, 2, \dots, N-1$). Por eso, cuando el problema es en 2D, como una grilla de filas y columnas $(r, c)$, primero hay que convertir cada celda en un único número para poder usar DSU correctamente. 
+
+Esto se hace con la siguiente fórmula:
+\[ id = r \times m + c \]
+(Donde $m$ es la cantidad de columnas de la grilla). 
+
+\begin{lstlisting}[language=C++]
+struct DSU {
+    vector<int> parent;
+    vector<int> sz; // Tamano del componente
+
+    DSU(int n) {
+        parent.resize(n + 1);
+        sz.assign(n + 1, 1);
+        for (int i = 0; i <= n; i++) parent[i] = i;
+    }
+
+    // Encuentra el representante con Compresion de Caminos
+    int find(int i) {
+        if (parent[i] == i) return i;
+        return parent[i] = find(parent[i]);
+    }
+
+    // Une dos conjuntos por Tamano
+    void unite(int i, int j) {
+        int root_i = find(i);
+        int root_j = find(j);
+        if (root_i != root_j) {
+            if (sz[root_i] < sz[root_j]) swap(root_i, root_j);
+            parent[root_j] = root_i;
+            sz[root_i] += sz[root_j];
+        }
+    }
+
+    bool same(int i, int j) {
+        return find(i) == find(j);
+    }
+};
+\end{lstlisting}
+
+\section{Fenwick Tree}

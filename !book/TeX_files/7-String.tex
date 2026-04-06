@@ -1,0 +1,21 @@
+\chapter{Strings}
+
+
+\section{Permutaciones de string}
+\begin{lstlisting}[language=C++, caption=Next\_permutation]
+
+int main() {
+    string s = "ABA";
+    
+    IMPORTANTE: Ordenar la cadena primero
+    sort(s.begin(), s.end()); 
+    
+    El bucle do-while asegura que se procese la 1 permutacion
+    do {
+        cout << s << endl;
+    } while (next_permutation(s.begin(), s.end()));
+    
+    return 0;
+}
+\end{lstlisting}
+\textbf{Complejidad:} Para una cadena de longitud $n$ es $n!$.
