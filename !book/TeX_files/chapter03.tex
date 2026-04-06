@@ -1,6 +1,7 @@
 \chapter{Búsquedas}
 
 \section{Búsqueda binaria}
+Siempre si vas a resolver algo con lower\_bound aunque lo diga o no lo diga el problema SIEMPRE pero SIEMPRE ordenalo, me comi varios wa porque confiaba que siempre venia ordenado. \\ 
 La función \texttt{lower\_bound} es una herramienta fundamental en la biblioteca estándar de C++ para realizar búsquedas eficientes en contenedores ordenados.
 
 \subsection{Función \texttt{lower\_bound}}
@@ -84,7 +85,93 @@ Cuando se utiliza \texttt{lower\_bound} sobre un contenedor, podemos obtener la 
 	}
 \end{lstlisting}
 
+\subsection{Problema}
+Tenemos un edificio de $n$ pisos, cada piso $i$ con $a_i$ departamentos. Las cartas están numeradas linealmente desde $1$ hasta la suma total de departamentos.  
+Dado un número de carta $b_j$, hay que determinar:
+\begin{itemize}
+	\item El \textbf{piso} donde va la carta.
+	\item El \textbf{departamento dentro del piso}.
+\end{itemize}
+
+\textbf{Ejemplo:} $n=2$, $a=[3,5]$, carta $b=7$ → Piso $2$, departamento $4$.
+
+Idea de la solución
+1. Construimos un vector de \textbf{prefix sums}:
+\[
+\text{pref}[0] = a_0, \quad
+\text{pref}[i] = \text{pref}[i-1] + a_i \quad \text{para } i \ge 1
+\]
+Cada elemento indica la cantidad total de departamentos hasta ese piso.  
+
+2. Para cada carta $b_j$ usamos \textbf{búsqueda binaria} con \texttt{lower\_bound}:
+\[
+\text{piso} = \text{lower\_bound}(\text{pref.begin(), pref.end(), } b_j) - \text{pref.begin()}
+\]
+
+3. Calculamos el departamento dentro del piso:
+\[
+\text{depto} = b_j - (\text{piso}>0 ? \text{pref[piso-1]} : 0)
+\]
+
+---
+
+Código en C++
+\begin{verbatim}
+
+	void solve() {
+		ll n, m;
+		cin >> n >> m;
+		vector<ll> a(n), b(m);
+		for (int i = 0; i < n; i++) cin >> a[i];
+		for (int i = 0; i < m; i++) cin >> b[i];
+		
+		// Construir prefix sums
+		vector<ll> pref(n);
+		pref[0] = a[0];
+		for (int i = 1; i < n; i++) pref[i] = pref[i-1] + a[i];
+		
+		for (int i = 0; i < m; i++) {
+			// Encontrar piso usando búsqueda binaria
+			int piso = lower_bound(pref.begin(), pref.end(), b[i]) - pref.begin();
+			// Departamento dentro del piso
+			ll depto = b[i] - (piso > 0 ? pref[piso-1] : 0);
+			cout << piso + 1 << " " << depto << "\n";
+		}
+	}
+	
+	
+\end{verbatim}
+
+
+
+Ejemplo paso a paso
+\[
+a = [3,5,2] \implies pref = [3,8,10], \quad b = [1,4,9]
+\]
+
+\begin{tabular}{c|c|c|c}
+	Carta $b_j$ & Piso (0-based) & Piso (1-based) & Departamento \\
+	\hline
+	1 & 0 & 1 & 1 \\
+	4 & 1 & 2 & 1 \\
+	9 & 2 & 3 & 1
+\end{tabular}
+
+Complejidad
+\begin{itemize}
+	\item Construir prefix sums: $O(n)$
+	\item Cada carta: $O(\log n)$ con \texttt{lower\_bound}
+	\item Total: $O(n + m \log n)$
+\end{itemize}
+
+Tips
+\begin{itemize}
+	\item `lower\_bound` devuelve iterador, se resta `pref.begin()` para obtener índice.
+	\item Esta técnica combina \textbf{prefix sums} con \textbf{búsqueda binaria} para ubicar rápidamente rangos acumulados.
+\end{itemize}
+
 \section{Búsqueda binaria en la respuesta}
+
 \subsection{Caso general}
 \begin{lstlisting}[style=cppstyle, caption={Busqueda binaria en la respuesta}]
 	bool can(int mid) {
