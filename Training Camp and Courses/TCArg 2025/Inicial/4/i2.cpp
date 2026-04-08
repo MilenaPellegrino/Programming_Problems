@@ -26,7 +26,7 @@ int main(){
             }
             cin>>m>>b; 
             //cout<<s<<endl<<m<<endl<<b<<endl;
-            if( b * 4 <= m ){
+            if( b +200 <= m ){
                 cout<<"PLAY"<<endl;
             } else {
                 cout<<"SKIP"<<endl;

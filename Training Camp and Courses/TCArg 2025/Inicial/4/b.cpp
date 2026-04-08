@@ -12,52 +12,63 @@ using namespace std;
 using ll = long long;
 typedef vector<ll> vi; 
 
-bool func1(vector<ll> &a, vector<ll> &b){
-    return a[0] <= b[0];
-}
+// 5
+// planta1 -> 1 1 1
+// planta2 -> 1 1 2
+// planta3 -> 1 1 3
+// planta4 -> 2 3 5
+// planta5 -> 2 2 4
 
-bool func2(vector<ll> &a, vector<ll> &b){
-    return a[1] <= b[1];
-}
-
-bool func3(vector<ll> &a, vector<ll> &b){
-    return a[2] <= b[2];
-}
-
-struct CustomCompare {
-    bool operator()(const vector<ll>& a, const vector<ll>& b) const {
-        return sz(a) > sz(b); // Example: Sort in descending order
-    }
-};
+// planta1 = max{2, 2, 0} = 2 
+// plant2 = max(2, 2, 0) = 2 
+// planta3 = max(2, 2, 0) = 2
+// planta4 = max(1, 0, 0) = 1
+// planta5 = max(1, 0, 0) = 1
 
 int main(){FIN; 
 
     ll t; cin>>t; 
+    
     while(t--){
         ll n; cin>>n; 
-        vector<vector<ll>> a(n, vector<ll>(3, 0));
-        vector<vector<ll>> gv;
-        set<vector<ll>, CustomCompare> g;
+        ll a[n][3];
+
         fore(i, 0, n){
             cin>>a[i][0]>>a[i][1]>>a[i][2];
         }
-        sort(all(a), func1);
-        fore(i, 0, n){
-            fore(j, i, n){
-                if(a[j][0] != a[i][0])break;
-                g[i].pb(j);
-                g[j].pb(i);
-            }
-        }
-        sort(all(a), func1);
-        fore(i, 0, n){
-            fore(j, i, n){
-                if(a[j][0] != a[i][0])break;
-                g[i].pb(j);
-                g[j].pb(i);
-            }
+        map<ll, ll> x, y, z;
+        vi res(n);
+        fore(i, 0, n) {
+            x[a[i][0]]++;
+            y[a[i][1]]++;
+            z[a[i][2]]++;
         }
 
+        fore(i, 0, n) {
+            ll aa = x[a[i][0]] - 1;
+            ll bb = y[a[i][1]] - 1;
+            ll cc = z[a[i][2]] - 1;
+
+            ll resu = max({aa, bb, cc});
+            res[i] = resu;
+        }
+        // fore(i, 0, n){
+        //     cout<<res[i]<<" ";
+        // }
+        
+        vi freq(n+1, 0);
+        fore(i,0, n){
+            freq[res[i]]++;
+        }
+
+        vi ans(n, 0);
+        ll mins = 0;
+        fore(k,0,n){
+            if(k > 0) mins += freq[k-1];
+            ans[k] = mins;
+        }
+        fore(k,0,n)cout<<ans[k]<<" ";
+        cout << "\n";
     }
 
     return 0; 
