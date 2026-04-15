@@ -49,4 +49,77 @@ struct DSU {
 };
 \end{lstlisting}
 
-\section{Fenwick Tree}
+\section{Fenwick Tree (BIT)}
+
+El \textbf{Fenwick Tree} o \textbf{Binary Indexed Tree (BIT)} es una estructura de datos sobre un arreglo de números que permite mantener información acumulada y responder consultas de forma eficiente.
+
+Se usa principalmente para dos operaciones:
+\begin{itemize}
+    \item \textbf{Actualización de punto}: sumar un valor a una posición específica.
+    \item \textbf{Consulta de prefijo}: obtener la suma de los elementos desde la posición $1$ hasta $i$.
+\end{itemize}
+
+\textbf{Complejidad temporal}
+\begin{itemize}
+    \item \texttt{update}: $O(\log n)$
+    \item \texttt{query}: $O(\log n)$
+\end{itemize}
+
+\textbf{Complejidad espacial}: $O(n)$.
+
+\textbf{Idea principal} \\
+Cada posición del BIT guarda la suma de un bloque de elementos del arreglo original. Gracias a esto, para actualizar o consultar no es necesario recorrer todo el arreglo: solo se visitan algunos nodos relacionados con el bit menos significativo de cada índice.
+
+\textbf{Función \texttt{update(idx, val)}}
+
+Sirve para sumar \texttt{val} en la posición \texttt{idx}.
+
+En la práctica, el arreglo del BIT y el tamaño \texttt{n} suelen declararse como variables globales o como atributos de una estructura/clase, porque las funciones \texttt{update} y \texttt{query} necesitan acceder a ellos. No es obligatorio que sean globales: también se pueden pasar como parámetros o encapsular dentro de un \texttt{struct}, pero en programación competitiva se usa mucho la versión global por simplicidad.
+
+\begin{itemize}
+    \item \textbf{Cómo funciona}: empieza en \texttt{idx} y va subiendo hacia sus "padres" en la estructura, agregando el valor en cada bloque afectado.
+    \item \textbf{Importante}: este BIT normalmente trabaja con índices desde $1$ hasta $n$.
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+void update(int idx, int val) {
+    for (; idx <= n; idx += idx & -idx)
+        bit[idx] += val;
+}
+\end{lstlisting}
+
+\textbf{Función \texttt{query(idx)}}
+
+Calcula la suma de los elementos desde la posición $1$ hasta \texttt{idx}.
+
+\begin{itemize}
+    \item \textbf{Cómo funciona}: suma el valor en \texttt{idx} y luego retrocede eliminando el bit menos significativo hasta llegar a cero.
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+int query(int pos) {
+    int res = 0;
+    for (; pos > 0; pos -= pos & -pos)
+        res += bit[pos];
+    return res;
+}
+\end{lstlisting}
+
+Para obtener la suma de un rango $[L, R]$, se usa:
+\[
+query(R) - query(L - 1)
+\]
+
+\textbf{¿En qué tipos de problemas sirve?}
+
+El BIT es útil cuando necesitas una mezcla de consultas y modificaciones en tiempo real, sobre todo si ambas afectan un solo punto del arreglo.
+
+\begin{itemize}
+    \item \textbf{Cálculo de inversiones}: contar pares $(i, j)$ tales que $i < j$ y $A[i] > A[j]$.
+    \item \textbf{Actualizaciones de punto y consultas de rango}: cuando el arreglo cambia constantemente y necesitas responder sumas rápidas.
+    \item \textbf{Conteo de frecuencias}: mantener cuántas veces aparece cada valor para responder consultas sobre prefijos o rangos de frecuencias.
+\end{itemize}
+
+\textbf{Observación} \\
+Si el problema requiere actualizaciones en un rango completo o consultas más complejas, a veces conviene usar un segment tree; si solo necesitas sumas de prefijos con cambios puntuales, el Fenwick Tree suele ser más simple y rápido de implementar.
+
