@@ -4,6 +4,7 @@ using namespace std;
 #define rof(i, a, b) for(ll i=(b);i>(a);i--)
 #define forn(e,c) for(const auto &e : (c))
 #define db(x) cout<<#x<< " = "<<(x)<<endl
+#define RAYA cout<<"=============="<<"\n"
 #define sz(x) ((int)x.size())
 #define all(x) (x).begin(),(x).end()
 #define pb push_back
@@ -25,44 +26,45 @@ typedef vector<char> vc;
 
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
+set<char> letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+set<char> numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+set<ll> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+string YES = "YES\n"; 
+string NO = "NO\n";
+
+const ll N = 1e6 + 10;
+const ll INF = 1e9 + 10;
+ll dp[N]; 
+ll coin[N];
+
+ll f(ll i, ll n){
+    if(i < 0) return INF;
+    if(i == 0) return 0;
+
+    if(dp[i] != -1) return dp[i];
+
+    ll best = INF;
+
+    fore(j, 0, n){
+        ll sub = f(i - coin[j], n);
+        if(sub != INF){
+            best = min(best, sub + 1);
+        }
+    }
+    return dp[i] = best;
+}
 void solve(){
     ll n; cin>>n;
-    ll m; cin>>m;
-    
-    vvi a(n+2, vi(m+2, -1));
-
-    fore(i, 1, n+1){
-        fore(j, 1, m+1){
-            ll ai; cin>>ai; 
-            a[i][j] = ai;
-        }
+    ll x; cin>>x;
+    fore(i, 0, n){
+        cin>>coin[i];
     }
+    memset(dp, -1, sizeof(dp));
 
-    fore(i, 1, n+1){
-        fore(j, 1, m+1){
-            bool es_par_celda = false; 
-            if((i+j) % 2 == 0){
-                es_par_celda  =true;
-            }
-            bool es_par_num = false;
-            if(a[i][j] % 2 == 0){
-                es_par_num = true;
-            }
-            if(es_par_celda && !es_par_num){
-                a[i][j] += 1;
-            }
-            if(!es_par_celda && es_par_num){
-                a[i][j] += 1;
-            }
-        }
-    }
+    ll res = f(x, n);
 
-    fore(i, 1, n+1){
-        fore(j, 1, m+1){
-            cout<<a[i][j]<<" ";
-        }
-        cout<<"\n";
-    }
+    if(res == INF) cout << -1 << endl;
+    else cout << res << endl;
 }
 
 int main(){
