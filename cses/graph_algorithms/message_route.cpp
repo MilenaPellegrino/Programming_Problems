@@ -19,49 +19,64 @@ using ll = long long;
 using pii = pair<int,int>;
 using pll = pair<ll,ll>;
 using vii = vector<int>;
-using vll = vector<ll>;
+using vi = vector<ll>;
 using vpi = vector<pii>;
 using vvll = vector<vector<ll>>;
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
 const ll MAXN = 1e5 + 10;
-ll n, m;
-vvll g(MAXN);
-//vector <bool> visited; // Nos dice si hemos visitado algun nodo 
+ll dist[MAXN];
+bool vis[MAXN];
+vi g[MAXN];
+ll par[MAXN];
 
-/*
-void bfs(vvll &G, ll v){
-    queue <ll> Q;  // Lista de nodos a visitar 
-    Q.push(v); //empezamos con el nodo origen
-
-    while (!Q.empty()){ //mientras nuestra lista tenga nodos
-        ll u = Q.front(); //seleccionamos el primer nodo de la lista
-        Q.pop(); //y lo eliminamos
-        
-        if (!visited[u]){ //si no lo hemos visitado
-            visited[u] = true;
-
-            for (ll i = 0; i < G[u].size(); ++i){
-                ll w = G[u][i];
-
-                Q.push(w); //ponemos a sus vecinos en la lista
-            }
-        }
-    }
+void bfs(ll s, ll n){
+	fill(vis, vis+n+1, false);
+	fill(par, par+n+1, -1);
+	queue<ll> q;
+	q.push(s);
+	vis[s] = true;
+	dist[s] = 0;
+	while(!q.empty()){
+		ll u = q.front(); 
+		q.pop();
+		for(ll v: g[u]){
+			if(!vis[v]){
+				vis[v] = true;
+				dist[v] = dist[u] + 1;
+				par[v] = u;
+				q.push(v);
+			}
+		}
+	}
 }
 
-*/
+vi camino(ll s, ll t){
+	if(!vis[t])return {};
+	vi path; 
+	for(ll v = t; v!= -1; v = par[v])path.pb(v);
+
+	reverse(all(path));
+	return path;
+}
 void solve(){
-	cin>>n>>m; 
-	fore(i, 0, m){
+	ll n, m; cin>>n>>m;
+	fore(i,0,m){
 		ll a, b; cin>>a>>b; 
-		a--; b--; 
-		g[a].pb(b); g[b].pb(a);
+		g[a].pb(b);
+		g[b].pb(a);
 	}
-	fore(i, 0, n){
-		fore(j, 0, m){
-			cout<<g[i][j]<<" ";
-		}
+	bfs(1, n);
+	vi cam = camino(1, n);
+	// fore(i,0, n+2){
+	// 	cout<<vis[i]<<" ";
+	// }
+	// cout<<endl;
+	if(!vis[n]){
+		cout<<"IMPOSSIBLE\n";
+	}else{
+		cout<<sz(cam)<<"\n";
+		fore(i,0, sz(cam))cout<<cam[i]<<" ";
 		cout<<"\n";
 	}
 }
@@ -76,58 +91,3 @@ int main(){
     return 0;
 }
 
-
-/*
- 
-vector<int> ar[100001];
-int dist[100001];
-int par[100001];
-bool vis[100001];
- 
-int n , m;
- 
-bool bfs(){
-	queue<int> q;
-	dist[1] = 1;
-	vis[1] = 1;
-	q.push(1);
-	
-	while(!q.empty()){
-		int node = q.front();
-		q.pop();
-		
-		if(node == n) return true;
-		
-		for(int u : ar[node])
-		if(vis[u] == false){
-			dist[u] = dist[node] + 1;
-			vis[u] = true;
-			par[u] = node;
-			q.push(u);
-		}
-	}
-	
-	return false;
-}
- 
-int main()
-{
-	int a , b;
-	
-	cin>>n>>m;
-	
-	REP(i , m) cin>>a>>b , ar[a].pb(b) , ar[b].pb(a);
-	
-	if(bfs()){
-		cout<<dist[n]<<endl;
-		
-		int path = n;
-		vector<int> res;
-		while(path != 0) res.pb(path) , path = par[path];
-		
-		reverse(res.begin() , res.end());
-		for(int node : res) cout<<node<<" ";
-	}
-	else cout<<"IMPOSSIBLE";
-}
-*/

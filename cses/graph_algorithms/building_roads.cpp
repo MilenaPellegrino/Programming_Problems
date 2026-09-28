@@ -19,32 +19,54 @@ using ll = long long;
 using pii = pair<int,int>;
 using pll = pair<ll,ll>;
 using vii = vector<int>;
-using vll = vector<ll>;
+using vi = vector<ll>;
 using vpi = vector<pii>;
 using vvll = vector<vector<ll>>;
 template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
 
+const ll MAXN = 1e5+10;
+bool vis[MAXN];
+vi g[MAXN];
 
-// Hacer lo mismo que el counting rooms a diferencia que cada vez  que encuentro una componente conexa guarda esa compoennte en un vector, y despues ver como imprimir la solucion (hacerlo desde 0)
+vi lista; 
+void dfs(ll u){
+    vis[u] = true;
+    for (ll v: g[u]){
+        if(!vis[v]){
+            dfs(v);
+        }
+    }
+}
 
-ll n, m; 
-vvll g(n+1, vll(m+1));
+ll comp(ll n){
+    ll ans = 0;
+    fore(i,0,n){
+        if(!vis[i]){
+            dfs(i);
+            ans++;
+            lista.pb(i+1);
+        }
+    }
+    return ans;
+}
 
 void solve(){
-    cin>>n>>m; 
-    // Lo guardo como una lista de adyacencia
-
-    fore(i, 1, m+1){
-        ll ma, mb; cin>>ma>>mb;
-        g[ma].pb(mb); 
-        g[mb].pb(ma);
+    ll n, m; cin>>n>>m; 
+    fore(i,0, m){
+        ll a, b; cin>>a>>b;
+        a--; b--;
+        g[a].pb(b);
+        g[b].pb(a);
     }
-
-    fore(i, 1, n+1){
-        fore(j, 1, m+1){
-            cout<<g[i][j]<<" ";
+    ll compo = comp(n);
+    // db(compo);
+    // cout<<lista<<endl;
+    cout<<compo-1<<"\n";
+    if(compo-1>0){
+        ll primer = lista[0];
+        fore(i, 1, sz(lista)){
+            cout<<primer<<" "<<lista[i]<<"\n";
         }
-        cout<<"\n";
     }
 }
  

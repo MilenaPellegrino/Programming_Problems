@@ -1,114 +1,89 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define fore(i,a,b) for(ll i=(a);i<(b);i++)
-#define forr(i, a, b) for(int i=(b);i>(a);i--)
-#define forn(e,c) for(const auto &e : (c))
-#define db(x) cout<<#x<< " = "<<(x)<<endl
+#include<bits/stdc++.h> 
+using namespace std; 
+#define fore(i,a,b) for(ll i=(a); i<(b); i++)
+#define all(x) (x).begin(), (x).end()
+#define pb push_back 
+#define snd second 
 #define sz(x) ((int)x.size())
-#define all(x) (x).begin(),(x).end()
-#define pb push_back
-#define pp pop_back
-#define mp make_pair
-#define fst first
-#define snd second
-#define str string
-#define pri(x) cout << (x) << "\n"
-#define mset(a,v) memset((a),(v),sizeof(a))
-#define FIN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0); 
-using ll = long long;
-using ll = long long;
-using pii = pair<int,int>;
-using pll = pair<ll,ll>;
-using vi = vector<int>;
-using vll = vector<ll>;
-using vpi = vector<pii>;
-using vpll = vector<pll>;
-using vvll = vector<vector<ll>>;
-using vvi = vector<vector<int>>;
-template<class T>ostream&operator<<(ostream&o,vector<T>const&v){o<<"[ ";for(auto const&x:v)o<<x<<" ";return o<<"]";}
-
-const ll MAXN = 1010;
-ll n, m, x, y; 
-char c; 
-char g[MAXN][MAXN];
-vpll moves = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; // derecha - izquierda - arriba - abajo
-ll vis[MAXN][MAXN];
-vector<char> path;
-
-// FUncion valid que verifia que no nos salimos de la matriz
-bool isValid(int x , int y){
-	if(x < 1 || x > n || y < 1 || y > m) return false;
-	if(g[x][y] == '#' || vis[x][y] == true) return false;
-	
-	return true;
-}
-
-
-// Funcion bfs modificada, retorna ture si pude llegar del nodo a al nodo b 
-bool bfs(ll x , ll y){
-	queue<pair<ll,ll>> q;
-	q.push({x , y});
-	vis[x][y] = true;
-	
-	while(!q.empty()){
-		int a = q.front().first;
-		int b = q.front().second;
-		q.pop();
-		
-		if(g[a][b] == 'B'){
-			while(1){
-				path.pb(br[a][b]);
-			
-				if(path.back() == 'L') b++;
-				if(path.back() == 'R') b--;
-				if(path.back() == 'U') a++;
-				if(path.back() == 'D') a--;
-				
-				if(a == x && b == y)
-				break;
-			}
-			return true;
-		}
-		
-		//left
-		if(isValid(a , b - 1)) br[a][b-1] = 'L' , q.push({a , b-1}) , vis[a][b-1] = true;
-		
-		//right
-		if(isValid(a , b + 1)) br[a][b+1] = 'R' , q.push({a , b+1}) , vis[a][b+1] = true;
-		
-		//up
-		if(isValid(a - 1, b)) br[a - 1][b] = 'U' , q.push({a - 1 , b}) , vis[a-1][b] = true;
-		
-		//down
-		if(isValid(a + 1, b)) br[a + 1][b] = 'D' , q.push({a + 1 , b}) , vis[a+1][b] = true;
-		
-	}
-	
-	return false;
-}
-void solve(){
-	cin>>n>>m;
-
-    // Paso la matrzi de entrada a cosas manejables 
-    fore(i, 0, n){
-        fore(j, 0, m){
-            cin>>c; 
-            g[i][j] = c; 
-            if(c=='A'){
-                x = i;
-                y = j; 
-            }
-        }
-    }
-
-}
+#define db(x) cout<<#x<<" = "<<(x)<<"\n";
  
+#define FIN ios::sync_with_stdio(0);cin.tie(0); cout.tie(0);
+ 
+using ll = long long; 
+typedef vector<ll> vi; 
+ 
+void deshacer(char m, ll& row, ll& col){
+	if (m == 'U') row += 1; 
+    if (m == 'D') row -= 1;
+    if (m == 'L') col += 1; 
+    if (m == 'R') col -= 1;
+}
+
 int main(){
     FIN; 
-    int t = 1;
-    //int t; cin>>t; 
-    while(t--){
-		solve();
+    ll n, m; cin>>n>>m; 
+    vector<string> g(n);
+	fore(i,0,n)cin>>g[i];
+	ll afil = -1, acol = -1;
+	ll bfil = -1, bcol = -1;
+	fore(i,0, n){
+		fore(j,0,m){
+			if(g[i][j] == 'A'){
+				afil = i;
+				acol = j;
+			}
+			if(g[i][j] == 'B'){
+				bfil = i; 
+				bcol = j;
+			}
+		}
+	}
+	// cout<<afil<<" "<<acol<<endl; 
+	// cout<<bfil<<" "<<bcol<<endl;
+	vector<vi> dist(n, vi(m, -1));
+	vector<vector<char>> donde(n, vector<char> (m, ' '));
+	ll dr[] = {-1, 1, 0, 0};
+	ll dc[] = {0, 0, -1, 1};
+	char letra[] = {'U', 'D', 'L', 'R'};
+
+	queue<pair<ll, ll>> q; 
+	q.push({afil, acol});
+	dist[afil][acol] = 0;
+
+	while(!q.empty()){
+		auto [fila, col] = q.front();
+		q.pop();
+
+		fore(k,0, 4){
+			ll nuevaFila = fila + dr[k];
+			ll nuevaCol = col + dc[k];
+			
+			if(nuevaFila < 0 || nuevaFila >= n || nuevaCol <0 || nuevaCol >= m) continue;
+			if(g[nuevaFila][nuevaCol] == '#')continue;
+			if (dist[nuevaFila][nuevaCol] != -1)continue;
+
+			dist[nuevaFila][nuevaCol] = dist[fila][col] + 1;
+			donde[nuevaFila][nuevaCol] = letra[k];
+			q.push({nuevaFila, nuevaCol});
+		}
+	}
+
+	if (dist[bfil][bcol] == -1){
+		cout<<"NO\n";
+	}else{
+		cout<<"YES\n";
+		cout<<dist[bfil][bcol]<<"\n";
+
+		string camino = "";
+		ll filaActual = bfil; 
+		ll colActual = bcol;
+		while(filaActual!= afil || colActual != acol){
+			char m = donde[filaActual][colActual];
+			camino += m;
+			deshacer(m, filaActual, colActual);
+		}  
+		reverse(all(camino));
+		cout<<camino<<"\n";
 	}
     return 0;
 }
